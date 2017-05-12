@@ -51,6 +51,8 @@ public class VentanaPrincipal implements Runnable {
 
 		final LabeledEditText passwd = new LabeledEditText(shell, SWT.NONE, "", "Password", true, 50);
 
+		System.out.println("registro este cambio");
+
 		Button registro = new BotonTexto().devuelveBotonTexto(shell, SWT.NONE, "Login");
 		registro.addSelectionListener(new SelectionListener() {
 
