@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import Componentes.BotonImagen;
+import Filtros.FiltradoDinamico;
 import Helpers.ColorHelper;
 import Helpers.WindowCenterHelper;
 
@@ -88,6 +89,21 @@ public class VentanaSelectora implements Runnable {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 				// TODO Auto-generated method stub
 
+			}
+		});
+		
+		dinamico.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				FiltradoDinamico.execute();
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 
