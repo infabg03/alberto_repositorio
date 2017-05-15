@@ -85,7 +85,12 @@ public class VentanaPrincipal implements Runnable {
 			}
 		});
 
-		final Link link = new Link(shell, SWT.NONE);
+		Composite compositeLink = new Composite(shell, SWT.NONE);
+		compositeLink.setLayoutData(new GridData(SWT.LEFT, SWT.DOWN, true, true));
+		GridLayout layoutLink = new GridLayout(1, false);
+		compositeLink.setLayout(layoutLink);
+
+		final Link link = new Link(compositeLink, SWT.NONE);
 		link.setText(i18Message.LINK_TXT);
 		link.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -94,8 +99,7 @@ public class VentanaPrincipal implements Runnable {
 
 					@Override
 					public void run() {
-						VentanaRegistroModal secondWindow = new VentanaRegistroModal(VentanaPrincipal.this.shell,
-								false);
+						VentanaRegistroModal secondWindow = new VentanaRegistroModal(shell, false);
 						secondWindow.open();
 
 					}

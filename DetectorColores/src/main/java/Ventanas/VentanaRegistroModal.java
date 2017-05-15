@@ -8,15 +8,12 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.internal.win32.MSG;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import Componentes.BotonImagen;
@@ -123,7 +120,6 @@ public class VentanaRegistroModal extends Dialog {
 		final LabeledEditText emailTxt = new LabeledEditText(shell, SWT.NONE, "", i18Message.MAIL, false, 50);
 		final LabeledEditText passwdTxt = new LabeledEditText(shell, SWT.NONE, "", i18Message.PASSWD, true, 50);
 		final LabeledEditText telefonoTxt = new LabeledEditText(shell, SWT.NONE, "", i18Message.TLFNO, false, 50);
-		Label padre = new Label(shell, SWT.NONE);
 
 		Button botonRegistro = new BotonTexto().devuelveBotonTexto(shell, SWT.NONE, i18Message.CONFIRM);
 

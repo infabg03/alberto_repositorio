@@ -9,12 +9,14 @@ import Componentes.BotonImagen;
 
 public class BotonImagenTest {
 	
+	private Button btnImagen;
+
 	public void main(String[] args) {
 		Display display = new Display();
 		Shell shell = new Shell(display);
 		shell.setLayout(new GridLayout());
 
-		Button btnImagen = new BotonImagen().getBotonImagen(display,shell,"src/resources/return.png");
+		btnImagen = new BotonImagen().getBotonImagen(display,shell,"src/resources/return.png");
 		
 		
 		shell.open();

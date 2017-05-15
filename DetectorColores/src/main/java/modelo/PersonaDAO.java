@@ -15,6 +15,7 @@ public class PersonaDAO {
 	Datastore ds;
 
 	public void mapeaDataStore() {
+
 		morphia.map(Persona.class);
 		ds = morphia.createDatastore(conexion, morphia.getMapper(), "Usuarios");
 	}
