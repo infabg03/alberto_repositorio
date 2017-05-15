@@ -124,6 +124,8 @@ public class i18Message {
 
 	public static final String MOCK = "Mock";
 
+	public static final String MOCK_ACCES_ERROR = "Login o password incorrectos para la version Mock.\nPor favor, consulte el boton de informacion.";
+
 	public static final String MSG_MOCK = "Configuracion Mock:\nUsuario: mock@email.com\nPassword: 12345678";
 
 	public static final String RUTA_FONDO = "src/resources/fondoApp.jpg";
@@ -157,5 +159,7 @@ public class i18Message {
 	public static final String GALERIA = "Ver mis fotos";
 
 	public static final String RUTA_BTN_VOLVER = "src/resources/return.png";
+
+	public static final String LINK_TXT = "¿No estas registrado? <A>Registrate ahora</A>";
 
 }

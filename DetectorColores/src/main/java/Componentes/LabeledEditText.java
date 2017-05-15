@@ -1,7 +1,6 @@
 package Componentes;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.layout.GridData;
@@ -9,7 +8,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.omg.CORBA.PRIVATE_MEMBER;
 
 public class LabeledEditText {
 
@@ -60,12 +58,14 @@ public class LabeledEditText {
 		// Hacemos esto para el borrado de los textos de los combos
 		text.addKeyListener(new KeyListener() {
 
+			@Override
 			public void keyReleased(KeyEvent arg0) {
 				// TODO Auto-generated method stub
 
 			}
 
 			// KeyEvent.getKeyText(e.getKeyCode()))
+			@Override
 			public void keyPressed(KeyEvent arg0) {
 				if (!escribo) {
 					text.setText("");
@@ -83,8 +83,8 @@ public class LabeledEditText {
 	public void setText(String texto) {
 		text.setText(texto);
 	}
-	
-	public void setDisable(){
+
+	public void setDisable() {
 		text.setEditable(false);
 	}
 }

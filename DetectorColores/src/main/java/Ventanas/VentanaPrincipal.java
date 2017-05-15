@@ -28,6 +28,7 @@ public class VentanaPrincipal implements Runnable {
 	static Shell shell;
 	static Button buttonSever;
 	static Button buttonMock;
+	static Button btnInfo;
 
 	private static void getContent(final Shell shell) {
 		Composite composite = new Composite(shell, SWT.NONE);
@@ -67,6 +68,11 @@ public class VentanaPrincipal implements Runnable {
 						Thread tVentanaSelectora = new Thread(new VentanaSelectora(false));
 						Display.getCurrent().dispose();
 						tVentanaSelectora.run();
+					} else {
+						MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_ACCESO, i18Message.MOCK_ACCES_ERROR);
+						btnInfo.forceFocus();
+						login.setText("");
+						passwd.setText("");
 					}
 				}
 
@@ -80,7 +86,7 @@ public class VentanaPrincipal implements Runnable {
 		});
 
 		final Link link = new Link(shell, SWT.NONE);
-		link.setText("¿No estas registrado? <A>Registrate ahora</A>");
+		link.setText(i18Message.LINK_TXT);
 		link.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -119,7 +125,7 @@ public class VentanaPrincipal implements Runnable {
 			}
 		});
 
-		Button btnInfo = new BotonImagen().getBotonImagen(Display.getCurrent(), radioGroup, i18Message.RUTA_INFO);
+		btnInfo = new BotonImagen().getBotonImagen(Display.getCurrent(), radioGroup, i18Message.RUTA_INFO);
 		btnInfo.addSelectionListener(new SelectionListener() {
 
 			@Override

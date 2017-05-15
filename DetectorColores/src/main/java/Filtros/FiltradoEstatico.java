@@ -67,23 +67,23 @@ public class FiltradoEstatico {
 				minc = cvScalar(95, value, 75, 0);
 				maxc = cvScalar(135, 255, 255, 0);
 				break;
-			case "Azul":
+			case i18Message.COLOR_AZUL:
 				minc = cvScalar(95, value, 75, 0);
 				maxc = cvScalar(135, 255, 255, 0);
 				break;
-			case "Rojo":
+			case i18Message.COLOR_ROJO:
 				minc = cvScalar(0, value, 75, 0);
 				maxc = cvScalar(10, 255, 255, 0);
 				break;
-			case "Verde":
+			case i18Message.COLOR_VERDE:
 				minc = cvScalar(25, value, 75, 0);
 				maxc = cvScalar(70, 255, 255, 0);
 				break;
-			case "Violeta":
+			case i18Message.COLOR_VIOLETA:
 				minc = cvScalar(135, value, 75, 0);
 				maxc = cvScalar(150, 255, 255, 0);
 				break;
-			case "Amarillo/Naranja":
+			case i18Message.COLOR_AMARILLO_NARANJA:
 				minc = cvScalar(10, value, 75, 0);
 				maxc = cvScalar(25, 255, 255, 0);
 				break;
