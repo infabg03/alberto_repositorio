@@ -25,11 +25,12 @@ import Helpers.GoBackHelper;
 import Helpers.ImageResizeHelper;
 import Helpers.MessageDialogHelper;
 import Helpers.WindowCenterHelper;
+import naming.i18Message;
 
 public class VentanaCambioColores implements Runnable {
 
-	private final String rutaImagen = "src/resources/abrir.png";
-	private final String rutaImagenBack = "src/resources/back.png";
+	private final String rutaImagen = i18Message.RUTA_OPEN;
+	private final String rutaImagenBack = i18Message.RUTA_BACK;
 
 	private final static int ORIGINAL = 1;
 	private final static int CIE = 2;
@@ -64,15 +65,13 @@ public class VentanaCambioColores implements Runnable {
 			public void widgetSelected(SelectionEvent arg0) {
 				// Guardamos en selected la ruta a la imagen seleccionada
 				FileDialog fd = new FileDialog(parent.getShell(), SWT.OPEN);
-				fd.setText("Open");
+				fd.setText(i18Message.OPEN);
 				fd.setFilterPath("C:/");
 				String[] filterExt = { "*.jpg", "*.png" };
 				fd.setFilterExtensions(filterExt);
 				selected = fd.open();
 
 				funcionSetearFotos();
-
-				System.out.println("la ruta es " + selected);
 			}
 
 			@Override
@@ -94,16 +93,16 @@ public class VentanaCambioColores implements Runnable {
 		// Anhadimos al toolbar el iconito para ejecutar un filechooser
 		ToolItem itemPush = new ToolItem(toolBar, SWT.PUSH);
 		Image imagen = new Image(Display.getCurrent(), rutaImagen);
-		itemPush.setToolTipText("Abrir");
-		itemPush.setText("Abrir");
+		itemPush.setToolTipText(i18Message.OPEN);
+		itemPush.setText(i18Message.OPEN);
 		itemPush.setImage(imagen);
 
 		funcionAbrir(itemPush, parent);
 
 		ToolItem itemBack = new ToolItem(toolBar, SWT.PUSH);
 		Image imagenBack = new Image(Display.getCurrent(), rutaImagenBack);
-		itemBack.setToolTipText("Atras");
-		itemBack.setText("Atras");
+		itemBack.setToolTipText(i18Message.BACK);
+		itemBack.setText(i18Message.BACK);
 		itemBack.setImage(imagenBack);
 
 		GoBackHelper.funcionAtras(shell, itemBack, passwd);
@@ -120,8 +119,7 @@ public class VentanaCambioColores implements Runnable {
 					foto = ImageResizeHelper.resize(foto, 580, 420);
 					labelFoto.setImage(foto);
 				} else {
-					MessageDialogHelper.aceptarDialog(shell, "Informacion de fotografia",
-							"Debe seleccionar previamente una fotografia");
+					MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_FOTO, i18Message.MSG_FOTO);
 					MessageBox dialog = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
 				}
 
@@ -149,23 +147,17 @@ public class VentanaCambioColores implements Runnable {
 
 	public void createBotonesEsilo(Composite parent) {
 
-		Button b1 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent,
-				"src/resources/iconoOpciones/Original.jpg");
+		Button b1 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent, i18Message.RUTA_BTN_ORIGINAL);
 
-		Button b2 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent,
-				"src/resources/iconoOpciones/Cie.jpg");
+		Button b2 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent, i18Message.RUTA_BTN_CIE);
 
-		Button b3 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent,
-				"src/resources/iconoOpciones/Gray.jpg");
+		Button b3 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent, i18Message.RUTA_BTN_GRAY);
 
-		Button b4 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent,
-				"src/resources/iconoOpciones/HLS.jpg");
+		Button b4 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent, i18Message.RUTA_BTN_HLS);
 
-		Button b5 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent,
-				"src/resources/iconoOpciones/Luv.jpg");
+		Button b5 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent, i18Message.RUTA_BTN_LUV);
 
-		Button b6 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent,
-				"src/resources/iconoOpciones/Hsv.jpg");
+		Button b6 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent, i18Message.RUTA_BTN_HSV);
 
 		addListenersBotonesEstilos(b1, b2, b3, b4, b5, b6);
 	}
@@ -209,7 +201,7 @@ public class VentanaCambioColores implements Runnable {
 
 		labelFoto = new Label(compositeImage, SWT.NONE);
 
-		Image im1 = new Image(display, "src/resources/blanco.jpg");
+		Image im1 = new Image(display, i18Message.RUTA_BLANCO);
 		im1 = ImageResizeHelper.resize(im1, 580, 420);
 		labelFoto.setImage(im1);
 

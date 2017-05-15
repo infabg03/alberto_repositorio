@@ -26,14 +26,10 @@ import Helpers.GoBackHelper;
 import Helpers.ImageResizeHelper;
 import Helpers.MessageDialogHelper;
 import Helpers.WindowCenterHelper;
+import naming.i18Message;
 
 public class VentanaFiltradoEstatico implements Runnable {
 
-	private final String rutaImagen = "src/resources/abrir.png";
-	private final String rutaImagenPlus = "src/resources/add.png";
-	private final String rutaImagenMinus = "src/resources/minus.png";
-	private final String rutaImagenReload = "src/resources/refresh.png";
-	private final String rutaImagenBack = "src/resources/back.png";
 	List<String> listaFotos;
 
 	Label labelFoto;
@@ -60,8 +56,7 @@ public class VentanaFiltradoEstatico implements Runnable {
 			labelFoto.setImage(original);
 			labelFoto2.setImage(filtrada);
 		} else {
-			MessageDialogHelper.aceptarDialog(shell, "Informacion de fotografia",
-					"Debe seleccionar previamente una fotografia");
+			MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_FOTO, i18Message.MSG_FOTO);
 		}
 	}
 
@@ -170,9 +165,9 @@ public class VentanaFiltradoEstatico implements Runnable {
 
 		// Anhadimos al toolbar el iconito para ejecutar un filechooser
 		ToolItem itemPush = new ToolItem(toolBar, SWT.PUSH);
-		Image imagen = new Image(Display.getCurrent(), rutaImagen);
-		itemPush.setToolTipText("Abrir");
-		itemPush.setText("Abrir");
+		Image imagen = new Image(Display.getCurrent(), i18Message.RUTA_OPEN);
+		itemPush.setToolTipText(i18Message.OPEN);
+		itemPush.setText(i18Message.OPEN);
 		itemPush.setImage(imagen);
 
 		final ToolItem separator = new ToolItem(toolBar, SWT.SEPARATOR);
@@ -181,13 +176,13 @@ public class VentanaFiltradoEstatico implements Runnable {
 		// Anhadimos combo selector colores
 		ToolItem sep = new ToolItem(toolBar, SWT.SEPARATOR);
 		combo = new Combo(toolBar, SWT.READ_ONLY);
-		sep.setText("Color");
-		combo.add("Azul");
-		combo.add("Verde");
-		combo.add("Rojo");
-		combo.add("Violeta");
-		combo.add("Amarillo/Naranja");
-		combo.setText("Azul");
+		sep.setText(i18Message.COLOR);
+		combo.add(i18Message.COLOR_AZUL);
+		combo.add(i18Message.COLOR_VERDE);
+		combo.add(i18Message.COLOR_ROJO);
+		combo.add(i18Message.COLOR_VIOLETA);
+		combo.add(i18Message.COLOR_AMARILLO_NARANJA);
+		combo.setText(i18Message.COLOR_AZUL);
 		combo.pack();
 		sep.setWidth(combo.getSize().x);
 		sep.setControl(combo);
@@ -198,15 +193,15 @@ public class VentanaFiltradoEstatico implements Runnable {
 		// Creamos la zona que aumenta el parametro
 
 		ToolItem itemPlus = new ToolItem(toolBar, SWT.PUSH);
-		Image imagenPlus = new Image(Display.getCurrent(), rutaImagenPlus);
-		itemPlus.setToolTipText("Aumentar");
-		itemPlus.setText("Mas espectro");
+		Image imagenPlus = new Image(Display.getCurrent(), i18Message.RUTA_PLUS);
+		itemPlus.setToolTipText(i18Message.INCREASE);
+		itemPlus.setText(i18Message.MAS_ESPECTRO);
 		itemPlus.setImage(imagenPlus);
 
 		ToolItem itemMinus = new ToolItem(toolBar, SWT.PUSH);
-		Image imagenMinus = new Image(Display.getCurrent(), rutaImagenMinus);
-		itemMinus.setToolTipText("Disminuir");
-		itemMinus.setText("Menos espectro");
+		Image imagenMinus = new Image(Display.getCurrent(), i18Message.RUTA_MINUS);
+		itemMinus.setToolTipText(i18Message.DECREASE);
+		itemMinus.setText(i18Message.MENOS_ESPECTRO);
 		itemMinus.setImage(imagenMinus);
 
 		final ToolItem separator3 = new ToolItem(toolBar, SWT.SEPARATOR);
@@ -215,18 +210,18 @@ public class VentanaFiltradoEstatico implements Runnable {
 		// Creamos la zona de recarga
 
 		ToolItem itemReload = new ToolItem(toolBar, SWT.PUSH);
-		Image imagenReload = new Image(Display.getCurrent(), rutaImagenReload);
-		itemReload.setToolTipText("Recargar");
-		itemReload.setText("Recargar");
+		Image imagenReload = new Image(Display.getCurrent(), i18Message.RUTA_RELOAD);
+		itemReload.setToolTipText(i18Message.RELOAD);
+		itemReload.setText(i18Message.RELOAD);
 		itemReload.setImage(imagenReload);
 
 		final ToolItem separator4 = new ToolItem(toolBar, SWT.SEPARATOR);
 		separator4.setWidth(620);
 
 		ToolItem itemBack = new ToolItem(toolBar, SWT.PUSH);
-		Image imagenBack = new Image(Display.getCurrent(), rutaImagenBack);
-		itemBack.setToolTipText("Atras");
-		itemBack.setText("Atras");
+		Image imagenBack = new Image(Display.getCurrent(), i18Message.RUTA_BACK);
+		itemBack.setToolTipText(i18Message.BACK);
+		itemBack.setText(i18Message.BACK);
 		itemBack.setImage(imagenBack);
 
 		GoBackHelper.funcionAtras(shell, itemBack, passwd);
@@ -244,11 +239,11 @@ public class VentanaFiltradoEstatico implements Runnable {
 		labelFoto = new Label(compositeFotos, SWT.NONE);
 		labelFoto2 = new Label(compositeFotos, SWT.NONE);
 
-		Image im2 = new Image(Display.getCurrent(), "src/resources/blanco.jpg");
+		Image im2 = new Image(Display.getCurrent(), i18Message.RUTA_BLANCO);
 		im2 = ImageResizeHelper.resize(im2, 580, 420);
 		labelFoto.setImage(im2);
 
-		Image im3 = new Image(Display.getCurrent(), "src/resources/blanco.jpg");
+		Image im3 = new Image(Display.getCurrent(), i18Message.RUTA_BLANCO);
 		im3 = ImageResizeHelper.resize(im3, 580, 420);
 		labelFoto2.setImage(im2);
 

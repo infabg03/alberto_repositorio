@@ -19,6 +19,9 @@ import javax.imageio.ImageIO;
 
 import com.googlecode.javacv.cpp.opencv_core.CvScalar;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
+
+import naming.i18Message;
+
 import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
 
 /**
@@ -50,7 +53,6 @@ public class FiltradoEstatico {
 
 		try {
 			BufferedImage imagen = ImageIO.read(new File(ruta));
-			System.out.println("salgo");
 			img1 = IplImage.createFrom(imagen);
 
 			imghsv = cvCreateImage(cvGetSize(img1), 8, 3);
@@ -89,14 +91,12 @@ public class FiltradoEstatico {
 
 			cvInRangeS(imghsv, minc, maxc, imgbin);
 
-			System.out.println("El valor es " + value);
-
 			cvWaitKey();
 
-			cvSaveImage("src/resources/temp/Original.jpg", img1);
-			parImagenes.add("src/resources/temp/Original.jpg");
-			cvSaveImage("src/resources/temp/Filtrada.jpg", imgbin);
-			parImagenes.add("src/resources/temp/Filtrada.jpg");
+			cvSaveImage(i18Message.RUTA_ORIGINAL_EST, img1);
+			parImagenes.add(i18Message.RUTA_ORIGINAL_EST);
+			cvSaveImage(i18Message.RUTA_FILTRADA_EST, imgbin);
+			parImagenes.add(i18Message.RUTA_FILTRADA_EST);
 
 			cvReleaseImage(imghsv);
 			cvReleaseImage(imgbin);

@@ -17,47 +17,45 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 import com.googlecode.javacv.cpp.opencv_core;
 import com.googlecode.javacv.cpp.opencv_highgui.CvCapture;
 
-public class FiltradoDinamico{
+import naming.i18Message;
 
-	
-	
+public class FiltradoDinamico {
+
 	public static void execute() {
 		opencv_core.IplImage img1, imghsv, imgbin;
 
+		imghsv = cvCreateImage(cvSize(640, 480), 8, 3);
+		imgbin = cvCreateImage(cvSize(640, 480), 8, 1);
+		CvCapture capture1 = cvCreateCameraCapture(CV_CAP_ANY);
 
+		int i = 1;
 
-        imghsv= cvCreateImage(cvSize(640,480),8,3);
-        imgbin= cvCreateImage(cvSize(640,480),8,1);
-        CvCapture capture1 = cvCreateCameraCapture(CV_CAP_ANY);
+		while (i == 1) {
 
-        int i=1;
+			img1 = cvQueryFrame(capture1);
 
-        while(i==1){
+			if (img1 == null)
+				break;
 
-         img1= cvQueryFrame(capture1);
+			cvCvtColor(img1, imghsv, CV_BGR2HSV);
+			// Rango de colores por los que se va a filtrar minc maxc
+			opencv_core.CvScalar minc, maxc;
+			minc = cvScalar(95, 50, 75, 0);
+			maxc = cvScalar(135, 255, 255, 0);
+			cvInRangeS(imghsv, minc, maxc, imgbin);
 
-         if(img1==null)
-             break;
+			cvShowImage(i18Message.LABEL_COLOR, img1);
+			cvShowImage(i18Message.LABEL_FILTRADA, imgbin);
+			char c = (char) cvWaitKey(15);
+			if (c == 'q') {
+				break;
+			}
 
-        cvCvtColor(img1,imghsv,CV_BGR2HSV);
-        // Rango de colores por los que se va a filtrar minc maxc
-        opencv_core.CvScalar minc,maxc;
-        minc = cvScalar(95,50,75,0);
-        maxc=cvScalar(135,255,255,0);
-        cvInRangeS(imghsv,minc,maxc,imgbin);
+		}
+		cvReleaseCapture(capture1);
+		cvReleaseImage(imgbin);
+		cvReleaseImage(imghsv);
 
-        cvShowImage("color",img1);
-        cvShowImage("filtrada",imgbin);
-        char c=(char)cvWaitKey(15);
-        if(c=='q'){
-            break;
-        }
+	}
 
-        }
-        cvReleaseCapture(capture1);
-        cvReleaseImage(imgbin);
-        cvReleaseImage(imghsv);
-
-    }
-	
 }

@@ -8,6 +8,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.internal.win32.MSG;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -25,11 +26,12 @@ import Helpers.MessageDialogHelper;
 import Helpers.ValidarCamposHelper;
 import Helpers.WindowCenterHelper;
 import controlador.GestorEventos;
+import naming.i18Message;
 
 public class VentanaRegistroModal extends Dialog {
 	private Display display;
 	private Shell shell;
-	private final String rutaImagenSalir = "src/resources/return.png";
+	private final String rutaImagenSalir = i18Message.RUTA_BTN_VOLVER;
 	boolean edicion = false;
 	String passwd;
 
@@ -52,11 +54,9 @@ public class VentanaRegistroModal extends Dialog {
 	public void registroOk(int opcion) {
 
 		if (opcion == 1)
-			MessageDialogHelper.aceptarDialog(shell, "Informacion de usuario",
-					"El registro se ha realizado correctamente");
+			MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_USER, i18Message.MSG_OK_USER);
 		else
-			MessageDialogHelper.aceptarDialog(shell, "Informacion de usuario",
-					"La modificacion se ha realizado correctamente");
+			MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_USER, i18Message.MSG_BAD_USER);
 	}
 
 	public void open() {
@@ -97,7 +97,7 @@ public class VentanaRegistroModal extends Dialog {
 		gridLayout2.horizontalSpacing = 0;
 		compo1.setLayout(gridLayout2);
 
-		final LabeledEditText nombreTxt = new LabeledEditText(compo1, SWT.LEFT, "", "Nombre", false, 45);
+		final LabeledEditText nombreTxt = new LabeledEditText(compo1, SWT.LEFT, "", i18Message.NOMBRE, false, 45);
 
 		Button btnImgSalir = new BotonImagen().getBotonImagen(display, compo1, rutaImagenSalir);
 		GridData gridData = new GridData(SWT.CENTER, SWT.FILL, true, false);
@@ -119,13 +119,13 @@ public class VentanaRegistroModal extends Dialog {
 			}
 		});
 
-		final LabeledEditText apellidosTxt = new LabeledEditText(shell, SWT.NONE, "", "Apellidos", false, 50);
-		final LabeledEditText emailTxt = new LabeledEditText(shell, SWT.NONE, "", "Email", false, 50);
-		final LabeledEditText passwdTxt = new LabeledEditText(shell, SWT.NONE, "", "Password", true, 50);
-		final LabeledEditText telefonoTxt = new LabeledEditText(shell, SWT.NONE, "", "Teléfono", false, 50);
+		final LabeledEditText apellidosTxt = new LabeledEditText(shell, SWT.NONE, "", i18Message.APELLIDOS, false, 50);
+		final LabeledEditText emailTxt = new LabeledEditText(shell, SWT.NONE, "", i18Message.MAIL, false, 50);
+		final LabeledEditText passwdTxt = new LabeledEditText(shell, SWT.NONE, "", i18Message.PASSWD, true, 50);
+		final LabeledEditText telefonoTxt = new LabeledEditText(shell, SWT.NONE, "", i18Message.TLFNO, false, 50);
 		Label padre = new Label(shell, SWT.NONE);
 
-		Button botonRegistro = new BotonTexto().devuelveBotonTexto(shell, SWT.NONE, "Confirmar");
+		Button botonRegistro = new BotonTexto().devuelveBotonTexto(shell, SWT.NONE, i18Message.CONFIRM);
 
 		List<String> lista = new ArrayList<String>();
 		lista.add(nombreTxt.getText());
@@ -182,18 +182,16 @@ public class VentanaRegistroModal extends Dialog {
 
 	private boolean camposCorrectos(String passwd, String mail, String tlfn) {
 		if (!ValidarCamposHelper.longitudPasswd(passwd)) {
-			MessageDialogHelper.aceptarDialog(shell, "Error formato", "El passwor debe tener 8 o mas caracteres");
+			MessageDialogHelper.aceptarDialog(shell, i18Message.FORMAT_ERROR, i18Message.MSG_ERROR_LONG_PASSWD);
 			return false;
 		} else if (!ValidarCamposHelper.mayuscMinuscPasswd(passwd)) {
-			MessageDialogHelper.aceptarDialog(shell, "Error formato", "El passwor debe tener minusculas y mayusculas");
+			MessageDialogHelper.aceptarDialog(shell, i18Message.FORMAT_ERROR, i18Message.MSG_ERROR_PASSWD);
 			return false;
 		} else if (!ValidarCamposHelper.formatoTelefono(tlfn)) {
-			MessageDialogHelper.aceptarDialog(shell, "Error formato",
-					"El telefono introducido tiene un formato incorrecto");
+			MessageDialogHelper.aceptarDialog(shell, i18Message.FORMAT_ERROR, i18Message.MSG_ERROR_TELEFONO);
 			return false;
 		} else if (!ValidarCamposHelper.formatoEmail(mail)) {
-			MessageDialogHelper.aceptarDialog(shell, "Error formato",
-					"El email introducido tiene un formato incorrecto");
+			MessageDialogHelper.aceptarDialog(shell, i18Message.FORMAT_ERROR, i18Message.MSG_ERROR_MAIL);
 			return false;
 		} else
 			return true;

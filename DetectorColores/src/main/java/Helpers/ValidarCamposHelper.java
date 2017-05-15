@@ -3,7 +3,6 @@ package Helpers;
 public class ValidarCamposHelper {
 
 	public static boolean longitudPasswd(String passwd) {
-		System.out.println("la longitud del password es " + passwd.length());
 		return passwd.length() >= 8;
 	}
 

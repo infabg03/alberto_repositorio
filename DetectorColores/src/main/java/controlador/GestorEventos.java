@@ -35,7 +35,7 @@ public class GestorEventos {
 			return login.matches(personaDAO.getPersona(login).getEmail())
 					&& passwd.matches(personaDAO.getPersona(login).getPassword());
 		} catch (NullPointerException e) {
-			System.out.println("Lista vacia");
+			// System.out.println("Lista vacia");
 			return false;
 		}
 

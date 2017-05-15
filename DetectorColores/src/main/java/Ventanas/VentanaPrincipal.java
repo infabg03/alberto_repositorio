@@ -1,7 +1,5 @@
 package Ventanas;
 
-import javax.swing.ButtonModel;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -23,13 +21,13 @@ import Helpers.ColorHelper;
 import Helpers.MessageDialogHelper;
 import Helpers.WindowCenterHelper;
 import controlador.GestorEventos;
+import naming.i18Message;
 
 public class VentanaPrincipal implements Runnable {
 
 	static Shell shell;
 	static Button buttonSever;
 	static Button buttonMock;
-	private static String rutaInfo = "src/resources/info.png";
 
 	private static void getContent(final Shell shell) {
 		Composite composite = new Composite(shell, SWT.NONE);
@@ -40,14 +38,14 @@ public class VentanaPrincipal implements Runnable {
 		gridData.heightHint = SWT.DEFAULT;
 		composite.setLayoutData(gridData);
 
-		final LabeledEditText login = new LabeledEditText(composite, SWT.NONE, "", "Login", false, 45);
+		final LabeledEditText login = new LabeledEditText(composite, SWT.NONE, "", i18Message.lOGIN, false, 45);
 
 		Composite radioGroup = new Composite(composite, SWT.NONE);
 		radioGroup.setLayout(new GridLayout(3, true));
 
-		final LabeledEditText passwd = new LabeledEditText(shell, SWT.NONE, "", "Password", true, 50);
+		final LabeledEditText passwd = new LabeledEditText(shell, SWT.NONE, "", i18Message.PASSWD, true, 50);
 
-		Button registro = new BotonTexto().devuelveBotonTexto(shell, SWT.NONE, "Login");
+		Button registro = new BotonTexto().devuelveBotonTexto(shell, SWT.NONE, i18Message.lOGIN);
 		registro.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -58,14 +56,14 @@ public class VentanaPrincipal implements Runnable {
 						Display.getCurrent().dispose();
 						tVentanaSelectora.run();
 					} else {
-						MessageDialogHelper.aceptarDialog(shell, "Informacion de acceso",
-								"El login o password son incorrectos");
+						MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_ACCESO, i18Message.MSG_ACCESO);
 
 						login.setText("");
 						passwd.setText("");
 					}
 				} else if (buttonMock.getSelection()) {
-					if (login.getText().matches("mock@email.com") && passwd.getText().matches("12345678")) {
+					if (login.getText().matches(i18Message.MOCK_MAIL)
+							&& passwd.getText().matches(i18Message.MOCK_PASSWD)) {
 						Thread tVentanaSelectora = new Thread(new VentanaSelectora(false));
 						Display.getCurrent().dispose();
 						tVentanaSelectora.run();
@@ -101,7 +99,7 @@ public class VentanaPrincipal implements Runnable {
 
 		buttonSever = new Button(radioGroup, SWT.RADIO);
 		buttonSever.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
-		buttonSever.setText("Server");
+		buttonSever.setText(i18Message.SERVER);
 		buttonSever.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -113,7 +111,7 @@ public class VentanaPrincipal implements Runnable {
 
 		buttonMock = new Button(radioGroup, SWT.RADIO);
 		buttonMock.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
-		buttonMock.setText("Mock");
+		buttonMock.setText(i18Message.MOCK);
 		buttonMock.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -121,13 +119,12 @@ public class VentanaPrincipal implements Runnable {
 			}
 		});
 
-		Button btnInfo = new BotonImagen().getBotonImagen(Display.getCurrent(), radioGroup, rutaInfo);
+		Button btnInfo = new BotonImagen().getBotonImagen(Display.getCurrent(), radioGroup, i18Message.RUTA_INFO);
 		btnInfo.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialogHelper.aceptarDialog(shell, "Informacion registro",
-						"Configuracion Mock:\nUsuario: mock@email.com\nPassword: 12345678");
+				MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_ACCESO, i18Message.MSG_MOCK);
 
 			}
 
@@ -145,7 +142,7 @@ public class VentanaPrincipal implements Runnable {
 		shell = new Shell(display, SWT.MIN);
 		shell.setLayout(new GridLayout(1, true));
 		shell.setSize(500, 300);
-		shell.setBackgroundImage(new Image(display, new ImageData("src/resources/fondoApp.jpg")));
+		shell.setBackgroundImage(new Image(display, new ImageData(i18Message.RUTA_FONDO)));
 
 		getContent(shell);
 

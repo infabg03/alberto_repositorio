@@ -21,6 +21,7 @@ import Componentes.BotonImagen;
 import Filtros.FiltradoDinamico;
 import Helpers.ColorHelper;
 import Helpers.WindowCenterHelper;
+import naming.i18Message;
 
 public class VentanaSelectora implements Runnable {
 	Shell shell;
@@ -137,12 +138,12 @@ public class VentanaSelectora implements Runnable {
 		composite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 		composite.setBackground(ColorHelper.COLOR_BLACK);
 
-		final Button btnEditar = new BotonImagen().getBotonImagen(display, composite, "src/resources/boss.png");
-		btnEditar.setToolTipText("Editar perfil");
-		final Button btnOpciones = new BotonImagen().getBotonImagen(display, composite, "src/resources/opencv.png");
-		btnOpciones.setToolTipText("Opciones Opencv");
-		final Button btnSalir = new BotonImagen().getBotonImagen(display, composite, "src/resources/exit.png");
-		btnSalir.setToolTipText("Salir");
+		final Button btnEditar = new BotonImagen().getBotonImagen(display, composite, i18Message.RUTA_BTN_EDITAR);
+		btnEditar.setToolTipText(i18Message.EDITAR);
+		final Button btnOpciones = new BotonImagen().getBotonImagen(display, composite, i18Message.RUTA_BTN_OPCIONES);
+		btnOpciones.setToolTipText(i18Message.OPCIONES);
+		final Button btnSalir = new BotonImagen().getBotonImagen(display, composite, i18Message.RUTA_BTN_EXIT);
+		btnSalir.setToolTipText(i18Message.SALIR);
 
 		// Si entramos sin acceso al servidor, es decir, con una configuracion
 		// mock, no podemos editar el perfil
@@ -159,25 +160,25 @@ public class VentanaSelectora implements Runnable {
 		final List<Button> listaBotones = new ArrayList<Button>();
 
 		final Button btnFiltradoEstatico = new BotonImagen().getBotonImagen(display, compositeSup,
-				"src/resources/filtradoestatico.png");
-		btnFiltradoEstatico.setToolTipText("Filtrado estatico");
+				i18Message.RUTA_BTN_FILTRADO_ESTATIC0);
+		btnFiltradoEstatico.setToolTipText(i18Message.FILTRADO_ESTATICO);
 
 		listaBotones.add(btnFiltradoEstatico);
 		final Button btnFiltradoDinamico = new BotonImagen().getBotonImagen(display, compositeSup,
-				"src/resources/filtradodinamico.png");
-		btnFiltradoDinamico.setToolTipText("Filtrado dinamico");
+				i18Message.RUTA_BTN_FILTRADO_DINAMICO);
+		btnFiltradoDinamico.setToolTipText(i18Message.FILTRADO_DINAMICO);
 		listaBotones.add(btnFiltradoDinamico);
 		final Button btnCambioColor = new BotonImagen().getBotonImagen(display, compositeSup,
-				"src/resources/cambiocolor.png");
-		btnCambioColor.setToolTipText("Cambia de color tu fotografia");
+				i18Message.RUTA_BTN_CAMBIO_COLOR);
+		btnCambioColor.setToolTipText(i18Message.CAMBIO_COLOR);
 		listaBotones.add(btnCambioColor);
 		final Button btnMoverRaton = new BotonImagen().getBotonImagen(display, compositeSup,
-				"src/resources/moverraton.png");
+				i18Message.RUTA_BTN_MOVER_RATON);
 		listaBotones.add(btnMoverRaton);
-		btnMoverRaton.setToolTipText("Mueve raton con la camara");
-		final Button btnGaleria = new BotonImagen().getBotonImagen(display, compositeSup, "src/resources/galeria.png");
+		btnMoverRaton.setToolTipText(i18Message.MOVER_RATON);
+		final Button btnGaleria = new BotonImagen().getBotonImagen(display, compositeSup, i18Message.RUTA_BTN_GALERIA);
 		listaBotones.add(btnGaleria);
-		btnGaleria.setToolTipText("Ver mis fotos");
+		btnGaleria.setToolTipText(i18Message.GALERIA);
 
 		ponerVisibles(listaBotones, false);
 

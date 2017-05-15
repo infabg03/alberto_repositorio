@@ -8,6 +8,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
+import naming.i18Message;
+
 public class ToolbarHelper {
 
 	private static String selected;
@@ -22,8 +24,8 @@ public class ToolbarHelper {
 		// Anhadimos al toolbar el iconito para ejecutar un filechooser
 		ToolItem itemPush = new ToolItem(toolBar, SWT.PUSH);
 		Image imagen = new Image(Display.getCurrent(), rutaImagen);
-		itemPush.setToolTipText("Abrir");
-		itemPush.setText("Abrir");
+		itemPush.setToolTipText(i18Message.OPEN);
+		itemPush.setText(i18Message.OPEN);
 		itemPush.setImage(imagen);
 
 		return toolBar;

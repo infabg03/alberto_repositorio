@@ -19,6 +19,8 @@ import javax.imageio.ImageIO;
 
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
+import naming.i18Message;
+
 public class CambiarColores {
 
 	public static String conversor(String ruta, int opcion) {
@@ -32,48 +34,48 @@ public class CambiarColores {
 
 			switch (opcion) {
 			case 1:
-				cvSaveImage("src/resources/tempFotos/Original.jpg", imagen);
-				foto = "src/resources/tempFotos/Original.jpg";
+				cvSaveImage(i18Message.RUTA_ORIGINAL, imagen);
+				foto = i18Message.RUTA_ORIGINAL;
 				break;
 
 			case 2:
 				IplImage cieimg = cvCreateImage(cvGetSize(imagen), IPL_DEPTH_8U, 3);
 				cvCvtColor(imagen, cieimg, CV_BGR2Lab);
-				cvSaveImage("src/resources/tempFotos/CIE.jpg", cieimg);
-				foto = "src/resources/tempFotos/CIE.jpg";
+				cvSaveImage(i18Message.RUTA_CIE, cieimg);
+				foto = i18Message.RUTA_CIE;
 				break;
 
 			case 3:
 				IplImage grayimg = cvCreateImage(cvGetSize(imagen), IPL_DEPTH_8U, 1);
 				cvCvtColor(imagen, grayimg, CV_BGR2GRAY);
-				cvSaveImage("src/resources/tempFotos/GRAY.jpg", grayimg);
-				foto = "src/resources/tempFotos/GRAY.jpg";
+				cvSaveImage(i18Message.RUTA_GRAY, grayimg);
+				foto = i18Message.RUTA_GRAY;
 				break;
 
 			case 4:
 				IplImage hlsimg = cvCreateImage(cvGetSize(imagen), IPL_DEPTH_8U, 3);
 				cvCvtColor(imagen, hlsimg, CV_BGR2HLS);
-				cvSaveImage("src/resources/tempFotos/HLS.jpg", hlsimg);
-				foto = "src/resources/tempFotos/HLS.jpg";
+				cvSaveImage(i18Message.RUTA_HLS, hlsimg);
+				foto = i18Message.RUTA_HLS;
 				break;
 
 			case 5:
 				IplImage luvimg = cvCreateImage(cvGetSize(imagen), IPL_DEPTH_8U, 3);
 				cvCvtColor(imagen, luvimg, CV_BGR2Luv);
-				cvSaveImage("src/resources/tempFotos/LUV.jpg", luvimg);
-				foto = "src/resources/tempFotos/LUV.jpg";
+				cvSaveImage(i18Message.RUTA_LUV, luvimg);
+				foto = i18Message.RUTA_LUV;
 				break;
 
 			case 6:
 				IplImage hsvimg = cvCreateImage(cvGetSize(imagen), IPL_DEPTH_8U, 3);
 				cvCvtColor(imagen, hsvimg, CV_BGR2HSV);
-				cvSaveImage("src/resources/tempFotos/HSV.jpg", hsvimg);
-				foto = "src/resources/tempFotos/HSV.jpg";
+				cvSaveImage(i18Message.RUTA_HSV, hsvimg);
+				foto = i18Message.RUTA_HSV;
 				break;
 
 			default:
-				cvSaveImage("src/resources/tempFotos/Original.jpg", imagen);
-				foto = "src/resources/tempFotos/Original.jpg";
+				cvSaveImage(i18Message.RUTA_ORIGINAL, imagen);
+				foto = i18Message.RUTA_ORIGINAL;
 				break;
 			}
 
