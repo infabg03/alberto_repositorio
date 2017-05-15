@@ -22,6 +22,7 @@ import Componentes.BotonImagen;
 import Componentes.BotonTexto;
 import Componentes.LabeledEditText;
 import Helpers.MessageDialogHelper;
+import Helpers.ValidarCamposHelper;
 import Helpers.WindowCenterHelper;
 import controlador.GestorEventos;
 
@@ -142,27 +143,30 @@ public class VentanaRegistroModal extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 
-				if (!edicion) {
-					List<String> lista = new ArrayList<String>();
-					lista.add(nombreTxt.getText());
-					lista.add(apellidosTxt.getText());
-					lista.add(emailTxt.getText());
-					lista.add(passwdTxt.getText());
-					lista.add(telefonoTxt.getText());
-					GestorEventos.insertaUsuario(lista);
-					registroOk(1);
-					shell.dispose();
+				if (camposCorrectos(passwdTxt.getText(), emailTxt.getText(), telefonoTxt.getText())) {
 
-				} else {
-					List<String> lista = new ArrayList<String>();
-					lista.add(nombreTxt.getText());
-					lista.add(apellidosTxt.getText());
-					lista.add(emailTxt.getText());
-					lista.add(passwdTxt.getText());
-					lista.add(telefonoTxt.getText());
-					GestorEventos.modificoUsuario(lista, passwd);
-					registroOk(2);
-					shell.dispose();
+					if (!edicion) {
+						List<String> lista = new ArrayList<String>();
+						lista.add(nombreTxt.getText());
+						lista.add(apellidosTxt.getText());
+						lista.add(emailTxt.getText());
+						lista.add(passwdTxt.getText());
+						lista.add(telefonoTxt.getText());
+						GestorEventos.insertaUsuario(lista);
+						registroOk(1);
+						shell.dispose();
+
+					} else {
+						List<String> lista = new ArrayList<String>();
+						lista.add(nombreTxt.getText());
+						lista.add(apellidosTxt.getText());
+						lista.add(emailTxt.getText());
+						lista.add(passwdTxt.getText());
+						lista.add(telefonoTxt.getText());
+						GestorEventos.modificoUsuario(lista, passwd);
+						registroOk(2);
+						shell.dispose();
+					}
 				}
 
 			}
@@ -174,5 +178,24 @@ public class VentanaRegistroModal extends Dialog {
 			}
 		});
 
+	}
+
+	private boolean camposCorrectos(String passwd, String mail, String tlfn) {
+		if (!ValidarCamposHelper.longitudPasswd(passwd)) {
+			MessageDialogHelper.aceptarDialog(shell, "Error formato", "El passwor debe tener 8 o mas caracteres");
+			return false;
+		} else if (!ValidarCamposHelper.mayuscMinuscPasswd(passwd)) {
+			MessageDialogHelper.aceptarDialog(shell, "Error formato", "El passwor debe tener minusculas y mayusculas");
+			return false;
+		} else if (!ValidarCamposHelper.formatoTelefono(tlfn)) {
+			MessageDialogHelper.aceptarDialog(shell, "Error formato",
+					"El telefono introducido tiene un formato incorrecto");
+			return false;
+		} else if (!ValidarCamposHelper.formatoEmail(mail)) {
+			MessageDialogHelper.aceptarDialog(shell, "Error formato",
+					"El email introducido tiene un formato incorrecto");
+			return false;
+		} else
+			return true;
 	}
 }

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.ShellAdapter;
@@ -28,10 +26,16 @@ public class VentanaSelectora implements Runnable {
 	Shell shell;
 	Display display;
 	String passwd;
+	boolean pintoEditar;
+
+	public VentanaSelectora(boolean pintoeditar) {
+		this.pintoEditar = pintoeditar;
+	}
 
 	public VentanaSelectora(String passwd) {
 		super();
 		this.passwd = passwd;
+		pintoEditar = true;
 	}
 
 	public void ponerVisibles(List<Button> arrayBtn, boolean visible) {
@@ -91,19 +95,19 @@ public class VentanaSelectora implements Runnable {
 
 			}
 		});
-		
+
 		dinamico.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				FiltradoDinamico.execute();
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
@@ -126,24 +130,7 @@ public class VentanaSelectora implements Runnable {
 
 	}
 
-	@Override
-	public void run() {
-		display = new Display();
-
-		// Hace que la shell sea de tamano fijo
-		shell = new Shell(display, SWT.MIN);
-		shell.setLayout(new GridLayout(1, true));
-		shell.setSize(425, 300);
-		shell.setBackground(ColorHelper.COLOR_BLACK);
-
-		// Deshabilita boton cerrado de la shell
-		shell.addShellListener(new ShellAdapter() {
-			@Override
-			public void shellClosed(ShellEvent e) {
-				e.doit = false;
-			}
-		});
-
+	private void getContent(Composite shell) {
 		Composite composite = new Composite(shell, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(3, false);
 		composite.setLayout(gridLayout);
@@ -156,6 +143,11 @@ public class VentanaSelectora implements Runnable {
 		btnOpciones.setToolTipText("Opciones Opencv");
 		final Button btnSalir = new BotonImagen().getBotonImagen(display, composite, "src/resources/exit.png");
 		btnSalir.setToolTipText("Salir");
+
+		// Si entramos sin acceso al servidor, es decir, con una configuracion
+		// mock, no podemos editar el perfil
+		if (!pintoEditar)
+			btnEditar.setEnabled(false);
 
 		Composite compositeSup = new Composite(shell, SWT.NONE);
 		GridLayout gridLayout2 = new GridLayout(5, false);
@@ -219,6 +211,27 @@ public class VentanaSelectora implements Runnable {
 		// Seccion listeners
 		ejecutarListerners(btnEditar, btnSalir, btnFiltradoEstatico, btnFiltradoDinamico, btnCambioColor, btnMoverRaton,
 				btnGaleria);
+	}
+
+	@Override
+	public void run() {
+		display = new Display();
+
+		// Hace que la shell sea de tamano fijo
+		shell = new Shell(display, SWT.MIN);
+		shell.setLayout(new GridLayout(1, true));
+		shell.setSize(425, 300);
+		shell.setBackground(ColorHelper.COLOR_BLACK);
+
+		// Deshabilita boton cerrado de la shell
+		shell.addShellListener(new ShellAdapter() {
+			@Override
+			public void shellClosed(ShellEvent e) {
+				e.doit = false;
+			}
+		});
+
+		getContent(shell);
 
 		// Centrar la ventana
 		WindowCenterHelper.centrarVentana(display, shell);
