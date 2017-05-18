@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -23,19 +24,18 @@ import com.alberto.boedo.controlador.GestorEventos;
 import com.alberto.boedo.helpers.ColorHelper;
 import com.alberto.boedo.helpers.MessageDialogHelper;
 import com.alberto.boedo.helpers.WindowCenterHelper;
-import com.alberto.boedo.modelo.PersonaDAOImpl;
 import com.alberto.boedo.naming.i18Message;
 
 public class VentanaPrincipal implements Runnable {
 
-	static Shell shell;
-	static Button buttonSever;
-	static Button buttonMock;
-	static Button btnInfo;
-	static ApplicationContext context = new ClassPathXmlApplicationContext("com/alberto/boedo/xml/beans.xml");
-	static GestorEventos gestor = context.getBean(GestorEventos.class);
+	private Button buttonSever;
+	private Button buttonMock;
+	private Button btnInfo;
 
-	private static void getContent(final Shell shell) {
+	ApplicationContext context = new ClassPathXmlApplicationContext("com/alberto/boedo/xml/beans.xml");
+	private GestorEventos gestor = context.getBean(GestorEventos.class);
+
+	private void getContent(final Shell shell) {
 
 		Composite composite = new Composite(shell, SWT.NONE);
 		composite.setBackground(ColorHelper.COLOR_WHITE);
@@ -76,7 +76,7 @@ public class VentanaPrincipal implements Runnable {
 						tVentanaSelectora.run();
 					} else {
 						MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_ACCESO, i18Message.MOCK_ACCES_ERROR);
-						btnInfo.forceFocus();
+						VentanaPrincipal.this.btnInfo.forceFocus();
 						login.setText("");
 						passwd.setText("");
 					}
@@ -135,8 +135,9 @@ public class VentanaPrincipal implements Runnable {
 			}
 		});
 
-		btnInfo = new BotonImagen().getBotonImagen(Display.getCurrent(), radioGroup, i18Message.RUTA_INFO);
-		btnInfo.addSelectionListener(new SelectionListener() {
+		VentanaPrincipal.this.btnInfo = new BotonImagen().getBotonImagen(Display.getCurrent(), radioGroup,
+				i18Message.RUTA_INFO);
+		VentanaPrincipal.this.btnInfo.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -155,12 +156,13 @@ public class VentanaPrincipal implements Runnable {
 
 	public static void main(String[] args) {
 		final Display display = new Display();
-		shell = new Shell(display, SWT.MIN);
+		final VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
+		final Shell shell = new Shell(display, SWT.MIN);
 		shell.setLayout(new GridLayout(1, true));
 		shell.setSize(500, 300);
 		shell.setBackgroundImage(new Image(display, new ImageData(i18Message.RUTA_FONDO)));
 
-		getContent(shell);
+		ventanaPrincipal.getContent(shell);
 
 		// Centrar la ventana
 		WindowCenterHelper.centrarVentana(display, shell);

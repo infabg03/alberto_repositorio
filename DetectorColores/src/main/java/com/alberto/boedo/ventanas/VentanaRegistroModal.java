@@ -21,7 +21,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.alberto.boedo.componentes.BotonImagen;
 import com.alberto.boedo.componentes.BotonTexto;
 import com.alberto.boedo.componentes.LabeledEditText;
-import com.alberto.boedo.controlador.GestorEventos;
+import com.alberto.boedo.controlador.GestorEventosImpl;
 import com.alberto.boedo.helpers.MessageDialogHelper;
 import com.alberto.boedo.helpers.ValidarCamposHelper;
 import com.alberto.boedo.helpers.WindowCenterHelper;
@@ -34,7 +34,7 @@ public class VentanaRegistroModal extends Dialog {
 	boolean edicion = false;
 	String passwd;
 	static ApplicationContext context = new ClassPathXmlApplicationContext("com/alberto/boedo/xml/beans.xml");
-	static GestorEventos gestor = context.getBean(GestorEventos.class);
+	static GestorEventosImpl gestor = context.getBean(GestorEventosImpl.class);
 
 	public VentanaRegistroModal(Shell parent, boolean edicion) {
 		super(parent, SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
