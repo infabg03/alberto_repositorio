@@ -13,6 +13,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.alberto.boedo.componentes.BotonImagen;
 import com.alberto.boedo.componentes.BotonTexto;
@@ -21,6 +23,7 @@ import com.alberto.boedo.controlador.GestorEventos;
 import com.alberto.boedo.helpers.ColorHelper;
 import com.alberto.boedo.helpers.MessageDialogHelper;
 import com.alberto.boedo.helpers.WindowCenterHelper;
+import com.alberto.boedo.modelo.PersonaDAOImpl;
 import com.alberto.boedo.naming.i18Message;
 
 public class VentanaPrincipal implements Runnable {
@@ -29,8 +32,11 @@ public class VentanaPrincipal implements Runnable {
 	static Button buttonSever;
 	static Button buttonMock;
 	static Button btnInfo;
+	static ApplicationContext context = new ClassPathXmlApplicationContext("com/alberto/boedo/xml/beans.xml");
+	static GestorEventos gestor = context.getBean(GestorEventos.class);
 
 	private static void getContent(final Shell shell) {
+
 		Composite composite = new Composite(shell, SWT.NONE);
 		composite.setBackground(ColorHelper.COLOR_WHITE);
 		composite.setLayout(new GridLayout(2, true));
@@ -52,7 +58,7 @@ public class VentanaPrincipal implements Runnable {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				if (buttonSever.getSelection()) {
-					if (GestorEventos.correctLogin(login.getText(), passwd.getText())) {
+					if (gestor.correctLogin(login.getText(), passwd.getText())) {
 						Thread tVentanaSelectora = new Thread(new VentanaSelectora(login.getText()));
 						Display.getCurrent().dispose();
 						tVentanaSelectora.run();

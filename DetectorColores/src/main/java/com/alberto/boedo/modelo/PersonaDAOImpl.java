@@ -5,8 +5,6 @@ import java.util.List;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.MongoClient;
@@ -14,7 +12,7 @@ import com.mongodb.MongoClient;
 @Repository
 public class PersonaDAOImpl implements PersonaDAO {
 
-	MongoClient conexion;
+	MongoClient conexion = Conexion.getMongoClient();
 	Morphia morphia = new Morphia();
 	Datastore ds;
 

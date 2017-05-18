@@ -15,6 +15,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.alberto.boedo.componentes.BotonImagen;
 import com.alberto.boedo.componentes.BotonTexto;
@@ -31,6 +33,8 @@ public class VentanaRegistroModal extends Dialog {
 	private final String rutaImagenSalir = i18Message.RUTA_BTN_VOLVER;
 	boolean edicion = false;
 	String passwd;
+	static ApplicationContext context = new ClassPathXmlApplicationContext("com/alberto/boedo/xml/beans.xml");
+	static GestorEventos gestor = context.getBean(GestorEventos.class);
 
 	public VentanaRegistroModal(Shell parent, boolean edicion) {
 		super(parent, SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
@@ -148,7 +152,7 @@ public class VentanaRegistroModal extends Dialog {
 						lista.add(emailTxt.getText());
 						lista.add(passwdTxt.getText());
 						lista.add(telefonoTxt.getText());
-						GestorEventos.insertaUsuario(lista);
+						gestor.insertaUsuario(lista);
 						registroOk(1);
 						shell.dispose();
 
@@ -159,7 +163,7 @@ public class VentanaRegistroModal extends Dialog {
 						lista.add(emailTxt.getText());
 						lista.add(passwdTxt.getText());
 						lista.add(telefonoTxt.getText());
-						GestorEventos.modificoUsuario(lista, passwd);
+						gestor.modificoUsuario(lista, passwd);
 						registroOk(2);
 						shell.dispose();
 					}
