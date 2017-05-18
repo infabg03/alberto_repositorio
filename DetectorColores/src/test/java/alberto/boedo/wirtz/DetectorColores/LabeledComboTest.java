@@ -5,7 +5,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import Componentes.LabeledCombo;
+import com.alberto.boedo.componentes.LabeledCombo;
 
 public class LabeledComboTest {
 

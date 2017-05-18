@@ -9,8 +9,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import Filtros.FiltradoEstatico;
-import Helpers.WindowCenterHelper;
+import com.alberto.boedo.filtros.FiltradoEstatico;
+import com.alberto.boedo.helpers.WindowCenterHelper;
 
 public class FiltroEstaticoTest {
 	static List<String> listaFotos;

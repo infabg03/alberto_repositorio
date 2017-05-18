@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import Componentes.BotonTexto;
+import com.alberto.boedo.componentes.BotonTexto;
 
 public class BotonTextoTest {
 	private final static Logger log = Logger.getLogger(BotonTextoTest.class);

@@ -3,8 +3,8 @@ package alberto.boedo.wirtz.DetectorColores;
 import java.util.ArrayList;
 import java.util.List;
 
-import modelo.Persona;
-import modelo.PersonaDAO;
+import com.alberto.boedo.modelo.Persona;
+import com.alberto.boedo.modelo.PersonaDAO;
 
 public class PersonaDaoMokTest {
 	
