@@ -3,13 +3,20 @@ package com.alberto.boedo.controlador;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.alberto.boedo.modelo.Persona;
-import com.alberto.boedo.modelo.PersonaDAO;
+import com.alberto.boedo.modelo.PersonaDAOImpl;
 
 public class GestorEventos {
+	static ApplicationContext context = new ClassPathXmlApplicationContext("com/alberto/boedo/xml/beans.xml");
+	static PersonaDAOImpl personaDAO = context.getBean(PersonaDAOImpl.class);
 
 	public static void insertaUsuario(List<String> campos) {
-		PersonaDAO personaDAO = new PersonaDAO();
 		List<String> rutas = new ArrayList<String>();
 
 		Persona p = new Persona();
@@ -24,14 +31,13 @@ public class GestorEventos {
 	}
 
 	public static void modificoUsuario(List<String> valores, String mail) {
-		PersonaDAO personaDAO = new PersonaDAO();
 		personaDAO.deletePersona(mail);
 		insertaUsuario(valores);
 	}
 
 	public static boolean correctLogin(String login, String passwd) {
-		PersonaDAO personaDAO = new PersonaDAO();
 		try {
+
 			return login.matches(personaDAO.getPersona(login).getEmail())
 					&& passwd.matches(personaDAO.getPersona(login).getPassword());
 		} catch (NullPointerException e) {

@@ -5,12 +5,16 @@ import java.util.List;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.mongodb.MongoClient;
 
-public class PersonaDAO {
+@Repository
+public class PersonaDAOImpl implements PersonaDAO {
 
-	MongoClient conexion = MongoConnection.getMongoClient();
+	MongoClient conexion;
 	Morphia morphia = new Morphia();
 	Datastore ds;
 
@@ -20,11 +24,13 @@ public class PersonaDAO {
 		ds = morphia.createDatastore(conexion, morphia.getMapper(), "Usuarios");
 	}
 
+	@Override
 	public void addPersona(Persona p) {
 		mapeaDataStore();
 		ds.save(p);
 	}
 
+	@Override
 	public Persona getPersona(String mail) {
 		mapeaDataStore();
 		Query<Persona> query = ds.createQuery(Persona.class);
@@ -36,6 +42,7 @@ public class PersonaDAO {
 			return null;
 	}
 
+	@Override
 	public void deletePersona(String mail) {
 
 		mapeaDataStore();

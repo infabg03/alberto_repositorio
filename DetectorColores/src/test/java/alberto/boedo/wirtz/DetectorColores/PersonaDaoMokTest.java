@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alberto.boedo.modelo.Persona;
-import com.alberto.boedo.modelo.PersonaDAO;
+import com.alberto.boedo.modelo.PersonaDAOImpl;
 
 public class PersonaDaoMokTest {
 	
 	public static void main(String[] args) {
 		
-		PersonaDAO personaDAO = new PersonaDAO();
+		PersonaDAOImpl personaDAO = new PersonaDAOImpl();
 		
 		List<String> rutas = new ArrayList<String>();
 		rutas.add("src/jjaj.png");
