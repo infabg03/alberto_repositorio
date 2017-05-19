@@ -29,14 +29,14 @@ import com.alberto.boedo.naming.i18Message;
 
 public class VentanaFiltradoEstatico implements Runnable {
 
-	List<String> listaFotos;
+	private List<String> listaFotos;
 
-	Label labelFoto;
-	Label labelFoto2;
-	Combo combo;
-	String selected;
-	Shell shell;
-	String passwd;
+	private Label labelFoto;
+	private Label labelFoto2;
+	private Combo combo;
+	private String selected;
+	private Shell shell;
+	private String passwd;
 
 	public VentanaFiltradoEstatico(String passwd) {
 		super();

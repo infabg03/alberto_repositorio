@@ -12,7 +12,7 @@ public class LabeledCombo {
 	private Composite parent;
 	private String textoLabel;
 	private int estilo;
-	Combo combo;
+	private Combo combo;
 
 	public LabeledCombo(Composite parent, String textoLabel, int estilo) {
 		super();
@@ -21,26 +21,26 @@ public class LabeledCombo {
 		this.estilo = estilo;
 		generarLabeledCombo(parent, textoLabel, estilo);
 	}
-	
-	public void generarLabeledCombo (Composite parent, String textoLabel, int estilo){
-		
+
+	public void generarLabeledCombo(Composite parent, String textoLabel, int estilo) {
+
 		Composite composite = new Composite(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(2, false);
-//		gridLayout.marginWidth = 5;
-//		gridLayout.marginHeight = 5;
-//		gridLayout.verticalSpacing = 0;
-//		gridLayout.horizontalSpacing = 0;
-		composite.setLayout(gridLayout);		
-		
+		// gridLayout.marginWidth = 5;
+		// gridLayout.marginHeight = 5;
+		// gridLayout.verticalSpacing = 0;
+		// gridLayout.horizontalSpacing = 0;
+		composite.setLayout(gridLayout);
+
 		Label label = new Label(composite, SWT.NONE);
 		label.setText(textoLabel);
-		
+
 		combo = new Combo(composite, estilo);
 		combo.setTouchEnabled(false);
-		
+
 	}
-	
-	public void add(String item){
+
+	public void add(String item) {
 		combo.add(item);
 	}
 

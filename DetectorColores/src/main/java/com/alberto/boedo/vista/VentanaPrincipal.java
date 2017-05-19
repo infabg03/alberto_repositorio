@@ -31,27 +31,40 @@ public class VentanaPrincipal implements Runnable {
 	private Button buttonMock;
 	private Button btnInfo;
 
-	ApplicationContext context = new ClassPathXmlApplicationContext("com/alberto/boedo/xml/beans.xml");
+	private ApplicationContext context = new ClassPathXmlApplicationContext("com/alberto/boedo/xml/beans.xml");
 	private GestorEventos gestor = context.getBean(GestorEventos.class);
 
 	private void getContent(final Shell shell) {
 
 		Composite composite = new Composite(shell, SWT.NONE);
-		composite.setBackground(ColorHelper.COLOR_WHITE);
 		composite.setLayout(new GridLayout(2, true));
 		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.widthHint = SWT.DEFAULT;
 		gridData.heightHint = SWT.DEFAULT;
 		composite.setLayoutData(gridData);
+		composite.setBackground(ColorHelper.COLOR_WHITE);
 
 		final LabeledEditText login = new LabeledEditText(composite, SWT.NONE, "", i18Message.lOGIN, false, 45);
 
 		Composite radioGroup = new Composite(composite, SWT.NONE);
 		radioGroup.setLayout(new GridLayout(3, true));
 
-		final LabeledEditText passwd = new LabeledEditText(shell, SWT.NONE, "", i18Message.PASSWD, true, 50);
+		Composite compoPasswd = new Composite(shell, SWT.NONE);
+		GridLayout gridLayout = new GridLayout(1, false);
+		compoPasswd.setBackground(ColorHelper.COLOR_WHITE);
+		compoPasswd.setLayout(gridLayout);
 
-		Button registro = new BotonTexto().devuelveBotonTexto(shell, SWT.NONE, i18Message.lOGIN);
+		final LabeledEditText passwd = new LabeledEditText(compoPasswd, SWT.NONE, "", i18Message.PASSWD, true, 50);
+
+		Composite botonera = new Composite(shell, SWT.NONE);
+		GridLayout gridLayoutBotonera = new GridLayout(1, false);
+		gridLayoutBotonera.marginWidth = 5;
+		gridLayoutBotonera.marginHeight = 5;
+		gridLayoutBotonera.verticalSpacing = 0;
+		gridLayoutBotonera.horizontalSpacing = 0;
+		botonera.setLayout(gridLayoutBotonera);
+
+		Button registro = new BotonTexto().devuelveBotonTexto(botonera, SWT.NONE, i18Message.lOGIN);
 		registro.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -161,6 +174,10 @@ public class VentanaPrincipal implements Runnable {
 		shell.setLayout(new GridLayout(1, true));
 		shell.setSize(500, 300);
 		shell.setBackgroundImage(new Image(display, new ImageData(i18Message.RUTA_FONDO)));
+
+		// Si no le damos un color por defecto a los composites que cuelguen de
+		// la shell, seran traslucidos
+		shell.setBackgroundMode(SWT.INHERIT_FORCE);
 
 		ventanaPrincipal.getContent(shell);
 

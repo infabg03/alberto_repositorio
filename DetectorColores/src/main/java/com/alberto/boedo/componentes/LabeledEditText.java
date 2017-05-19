@@ -17,7 +17,7 @@ public class LabeledEditText {
 	private boolean passwd;
 	private int filtros;
 	private int ancho;
-	Text text;
+	private Text text;
 
 	private boolean escribo = false;
 

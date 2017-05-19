@@ -38,7 +38,6 @@ public class GestorEventosImpl implements GestorEventos {
 	@Override
 	public boolean correctLogin(String login, String passwd) {
 		try {
-
 			return login.matches(personaDAO.getPersona(login).getEmail())
 					&& passwd.matches(personaDAO.getPersona(login).getPassword());
 		} catch (NullPointerException e) {

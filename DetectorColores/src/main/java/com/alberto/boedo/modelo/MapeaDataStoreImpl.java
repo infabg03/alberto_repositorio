@@ -19,15 +19,31 @@ public class MapeaDataStoreImpl implements MapeaDataStore {
 	private Datastore ds;
 	@Value("Usuarios")
 	private String dbName;
-	// Class claseMapeo;
+	private Class claseMapeo = Persona.class;
 
 	@Override
 	@Bean
 	public Datastore mapeaDataStore() {
-		morphia.map(Persona.class);
+		morphia.map(claseMapeo);
 		ds = morphia.createDatastore(conexion, morphia.getMapper(), dbName);
 		return ds;
 
+	}
+
+	public String getDbName() {
+		return dbName;
+	}
+
+	public void setDbName(String dbName) {
+		this.dbName = dbName;
+	}
+
+	public Class getClaseMapeo() {
+		return claseMapeo;
+	}
+
+	public void setClaseMapeo(Class claseMapeo) {
+		this.claseMapeo = claseMapeo;
 	}
 
 }
