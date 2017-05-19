@@ -1,4 +1,4 @@
-package com.alberto.boedo.ventanas;
+package com.alberto.boedo.vista;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;

@@ -1,9 +1,15 @@
 package com.alberto.boedo.modelo;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import com.mongodb.MongoClient;
 
+@Configuration
 public class Conexion {
-	public static MongoClient getMongoClient() {
+
+	@Bean
+	public MongoClient getMongoClient() {
 		return new MongoClient();
 	}
 

@@ -1,4 +1,4 @@
-package com.alberto.boedo.ventanas;
+package com.alberto.boedo.vista;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -68,6 +67,7 @@ public class VentanaPrincipal implements Runnable {
 						login.setText("");
 						passwd.setText("");
 					}
+
 				} else if (buttonMock.getSelection()) {
 					if (login.getText().matches(i18Message.MOCK_MAIL)
 							&& passwd.getText().matches(i18Message.MOCK_PASSWD)) {

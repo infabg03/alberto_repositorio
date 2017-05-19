@@ -1,4 +1,4 @@
-package com.alberto.boedo.ventanas;
+package com.alberto.boedo.vista;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,7 +5,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolItem;
 
-import com.alberto.boedo.ventanas.VentanaSelectora;
+import com.alberto.boedo.vista.VentanaSelectora;
 
 public class GoBackHelper {
 
