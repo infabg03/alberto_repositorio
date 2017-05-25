@@ -42,6 +42,8 @@ public class i18Message {
 
 	public static final String RUTA_BACK = "src/resources/back.png";
 
+	public static final String RUTA_SAVE = "src/resources/floppy.png";
+
 	public static final String RUTA_PLUS = "src/resources/add.png";
 
 	public static final String RUTA_MINUS = "src/resources/minus.png";
@@ -107,6 +109,8 @@ public class i18Message {
 	public static final String CONFIRM = "Confirmar";
 
 	public static final String SALIR = "Salir";
+
+	public static final String SAVE = "Guardar";
 
 	public static final String OPCIONES = "Opciones OpenCV";
 

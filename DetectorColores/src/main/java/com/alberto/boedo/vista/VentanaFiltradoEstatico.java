@@ -18,8 +18,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.alberto.boedo.factoria.BeansFactory;
 import com.alberto.boedo.filtros.FiltradoEstatico;
+import com.alberto.boedo.filtros.IfiltradoEstatico;
 import com.alberto.boedo.helpers.ColorHelper;
 import com.alberto.boedo.helpers.GoBackHelper;
 import com.alberto.boedo.helpers.ImageResizeHelper;
@@ -38,6 +42,16 @@ public class VentanaFiltradoEstatico implements Runnable {
 	private Shell shell;
 	private String passwd;
 
+	private IfiltradoEstatico filtradoEstatico = BeansFactory.getBean(FiltradoEstatico.class);
+
+	public void setFiltradoEstado(IfiltradoEstatico filtradoEstatico) {
+		this.filtradoEstatico = filtradoEstatico;
+	}
+
+	public VentanaFiltradoEstatico() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public VentanaFiltradoEstatico(String passwd) {
 		super();
 		this.passwd = passwd;
@@ -45,7 +59,7 @@ public class VentanaFiltradoEstatico implements Runnable {
 
 	public void funcionSetearFotos() {
 		if (selected != null) {
-			listaFotos = FiltradoEstatico.conversor(selected, combo.getText());
+			listaFotos = filtradoEstatico.conversor(selected, combo.getText(), passwd);
 
 			Image original = new Image(Display.getCurrent(), listaFotos.get(0));
 			original = ImageResizeHelper.resize(original, 580, 420);
@@ -64,7 +78,7 @@ public class VentanaFiltradoEstatico implements Runnable {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				FiltradoEstatico.setValorOriginal();
+				filtradoEstatico.setValorOriginal();
 
 			}
 
@@ -126,7 +140,8 @@ public class VentanaFiltradoEstatico implements Runnable {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				FiltradoEstatico.aumentarValor();
+				filtradoEstatico.aumentarValor();
+				System.out.println("El password es: " + passwd);
 
 			}
 
@@ -143,7 +158,7 @@ public class VentanaFiltradoEstatico implements Runnable {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				FiltradoEstatico.disminuirValor();
+				filtradoEstatico.disminuirValor();
 
 			}
 
@@ -215,7 +230,7 @@ public class VentanaFiltradoEstatico implements Runnable {
 		itemReload.setImage(imagenReload);
 
 		final ToolItem separator4 = new ToolItem(toolBar, SWT.SEPARATOR);
-		separator4.setWidth(620);
+		separator4.setWidth(550);
 
 		ToolItem itemBack = new ToolItem(toolBar, SWT.PUSH);
 		Image imagenBack = new Image(Display.getCurrent(), i18Message.RUTA_BACK);

@@ -17,6 +17,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.stereotype.Component;
+
 import com.alberto.boedo.naming.i18Message;
 import com.googlecode.javacv.cpp.opencv_core.CvScalar;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
@@ -27,31 +29,34 @@ import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
  *
  * @author Alberto
  */
-public class FiltradoEstatico {
+
+@Component("filtradoEstatico")
+public class FiltradoEstatico implements IfiltradoEstatico {
 
 	private static double value = 150;
 
-	public static void aumentarValor() {
+	public void aumentarValor() {
 		if (!(value > 245))
 			value += 10;
 	}
 
-	public static void disminuirValor() {
+	public void disminuirValor() {
 		if (!(value < 10))
 			value -= 10;
 	}
 
-	public static void setValorOriginal() {
+	public void setValorOriginal() {
 		value = 150;
 	}
 
-	public static List<String> conversor(String ruta, String color) {
+	@Override
+	public List<String> conversor(String rutaImagenSeleccionada, String color, String passwd) {
 
 		IplImage img1, imghsv, imgbin;
 		List<String> parImagenes = new ArrayList<String>(2);
 
 		try {
-			BufferedImage imagen = ImageIO.read(new File(ruta));
+			BufferedImage imagen = ImageIO.read(new File(rutaImagenSeleccionada));
 			img1 = IplImage.createFrom(imagen);
 
 			imghsv = cvCreateImage(cvGetSize(img1), 8, 3);

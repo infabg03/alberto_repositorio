@@ -11,6 +11,7 @@ import com.alberto.boedo.modelo.PersonaDAO;
 
 @Component
 public class GestorEventosImpl implements GestorEventos {
+
 	@Autowired
 	private PersonaDAO personaDAO;
 
