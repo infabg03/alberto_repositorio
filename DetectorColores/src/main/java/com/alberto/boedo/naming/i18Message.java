@@ -24,6 +24,10 @@ public class i18Message {
 
 	public static final String RUTA_FILTRADA_EST = "src/resources/temp/Filtrada.jpg";
 
+	public static final String RUTA_LEFT = "src/resources/left-arrow.png";
+
+	public static final String RUTA_RIGHT = "src/resources/right-arrow.png";
+
 	public static final String OPEN = "Abrir";
 
 	public static final String BACK = "Atras";
