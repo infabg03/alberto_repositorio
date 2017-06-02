@@ -7,4 +7,5 @@ public interface PersonaDAO {
 	public Persona getPersona(String mail);
 
 	public void deletePersona(String mail);
+
 }

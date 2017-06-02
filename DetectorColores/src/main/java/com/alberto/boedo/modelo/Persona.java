@@ -2,6 +2,7 @@ package com.alberto.boedo.modelo;
 
 import java.util.List;
 
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -10,13 +11,16 @@ public class Persona {
 
 	private String nombre;
 	private String apellidos;
-	@Id private String email;
+	@Id
+	private String email;
 	private String password;
 	private String telefono;
-	private List<String> fotos;
-	
-	public Persona(){}
-	
+
+	@Embedded
+	private List<Foto> fotos;
+
+	public Persona() {
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -58,16 +62,12 @@ public class Persona {
 		this.telefono = telefono;
 	}
 
-	public List<String> getFotos() {
+	public List<Foto> getFotos() {
 		return fotos;
 	}
 
-	public void setFotos(List<String> fotos) {
+	public void setFotos(List<Foto> fotos) {
 		this.fotos = fotos;
-	};
-	
-	
-	
-	
-	
+	}
+
 }

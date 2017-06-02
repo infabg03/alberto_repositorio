@@ -1,5 +1,11 @@
 package com.alberto.boedo.vista;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -15,13 +21,14 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import com.alberto.boedo.componentes.BotonImagen;
 import com.alberto.boedo.filtros.CambiarColores;
 import com.alberto.boedo.helpers.ColorHelper;
-import com.alberto.boedo.helpers.GoBackHelper;
+import com.alberto.boedo.helpers.FunctionsHelper;
 import com.alberto.boedo.helpers.ImageResizeHelper;
 import com.alberto.boedo.helpers.MessageDialogHelper;
 import com.alberto.boedo.helpers.WindowCenterHelper;
@@ -39,10 +46,13 @@ public class VentanaCambioColores implements Runnable {
 	private final static int LUV = 5;
 	private final static int HSV = 6;
 
-	static String selected;
-	static Label labelFoto;
+	private static String selected;
+	private static Label labelFoto;
 	String passwd;
-	static Shell shell;
+	private static Shell shell;
+
+	private String ruta;
+	private Text textoFotoGuardar;
 
 	public VentanaCambioColores(String passwd) {
 		super();
@@ -83,6 +93,40 @@ public class VentanaCambioColores implements Runnable {
 
 	}
 
+	public void funcionGuardar(ToolItem itemSave) {
+		itemSave.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					if (!(textoFotoGuardar.getText().length() == 0)) {
+						BufferedImage imagen = ImageIO.read(new File(ruta));
+						StringBuilder rutaSave = new StringBuilder();
+						StringBuilder rutaSaveDirectory = new StringBuilder();
+						rutaSaveDirectory.append("C:\\fotos\\").append(passwd);
+						rutaSave.append("C:\\fotos\\").append(passwd).append("\\").append(textoFotoGuardar.getText())
+								.append(".jpg");
+						File directorio = new File(rutaSaveDirectory.toString());
+						directorio.mkdirs();
+						System.out.println("Se ha creado directorio " + rutaSaveDirectory.toString());
+						File file = new File(rutaSave.toString());
+						ImageIO.write(imagen, "jpg", file);
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
 	public void createToolBar(final Composite parent) {
 
 		// Creamos la toolbar
@@ -97,25 +141,48 @@ public class VentanaCambioColores implements Runnable {
 		itemPush.setText(i18Message.OPEN);
 		itemPush.setImage(imagen);
 
+		final ToolItem separator = new ToolItem(toolBar, SWT.SEPARATOR);
+		separator.setWidth(20);
+
+		// Campo de texto para introducir donde queremos guardar la foto
+		ToolItem sep2 = new ToolItem(toolBar, SWT.SEPARATOR);
+		textoFotoGuardar = new Text(toolBar, SWT.NONE);
+		sep2.setWidth(textoFotoGuardar.getSize().x);
+		sep2.setControl(textoFotoGuardar);
+
+		// Zona donde creamos el boton guardar y su funcionalidad
+		ToolItem itemSave = new ToolItem(toolBar, SWT.PUSH);
+		Image imagenSave = new Image(Display.getCurrent(), i18Message.RUTA_SAVE);
+		itemSave.setToolTipText(i18Message.SAVE);
+		itemSave.setText(i18Message.SAVE);
+		itemSave.setImage(imagenSave);
+
+		funcionGuardar(itemSave);
+
+		final ToolItem separator4 = new ToolItem(toolBar, SWT.SEPARATOR);
+		separator4.setWidth(400);
+
 		funcionAbrir(itemPush, parent);
 
+		// Anhadimos el icono para volver atras
 		ToolItem itemBack = new ToolItem(toolBar, SWT.PUSH);
 		Image imagenBack = new Image(Display.getCurrent(), rutaImagenBack);
 		itemBack.setToolTipText(i18Message.BACK);
 		itemBack.setText(i18Message.BACK);
 		itemBack.setImage(imagenBack);
 
-		GoBackHelper.funcionAtras(shell, itemBack, passwd);
+		FunctionsHelper.funcionAtras(shell, itemBack, passwd);
 
 	}
 
-	public static SelectionListener listenerBotones(final int opcion) {
+	public SelectionListener listenerBotones(final int opcion) {
 		return new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				if (selected != null) {
-					Image foto = new Image(Display.getCurrent(), CambiarColores.conversor(selected, opcion));
+					ruta = CambiarColores.conversor(selected, opcion);
+					Image foto = new Image(Display.getCurrent(), ruta);
 					foto = ImageResizeHelper.resize(foto, 580, 420);
 					labelFoto.setImage(foto);
 				} else {
@@ -134,7 +201,7 @@ public class VentanaCambioColores implements Runnable {
 
 	}
 
-	public static void addListenersBotonesEstilos(Button bOriginal, Button bCie, Button bGray, Button bHls, Button bLuv,
+	public void addListenersBotonesEstilos(Button bOriginal, Button bCie, Button bGray, Button bHls, Button bLuv,
 			Button bHsv) {
 
 		bOriginal.addSelectionListener(listenerBotones(ORIGINAL));

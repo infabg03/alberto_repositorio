@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.ToolItem;
 
 import com.alberto.boedo.vista.VentanaSelectora;
 
-public class GoBackHelper {
+public class FunctionsHelper {
 
 	public static void funcionAtras(final Shell shell, ToolItem itemBack, final String passwd) {
 		itemBack.addSelectionListener(new SelectionListener() {
@@ -25,7 +25,5 @@ public class GoBackHelper {
 
 			}
 		});
-
 	}
-
 }

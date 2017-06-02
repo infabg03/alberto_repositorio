@@ -129,6 +129,23 @@ public class VentanaSelectora implements Runnable {
 			}
 		});
 
+		galeria.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shell.dispose();
+				Thread tVentanaGaleria = new Thread(new VentanaGaleria(passwd));
+				tVentanaGaleria.start();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 	}
 
 	private void getContent(Composite shell) {

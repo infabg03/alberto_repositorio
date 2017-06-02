@@ -20,6 +20,7 @@ import com.alberto.boedo.componentes.BotonImagen;
 import com.alberto.boedo.componentes.BotonTexto;
 import com.alberto.boedo.componentes.LabeledEditText;
 import com.alberto.boedo.controlador.GestorEventos;
+import com.alberto.boedo.factoria.BeansFactory;
 import com.alberto.boedo.helpers.ColorHelper;
 import com.alberto.boedo.helpers.MessageDialogHelper;
 import com.alberto.boedo.helpers.WindowCenterHelper;
@@ -31,8 +32,7 @@ public class VentanaPrincipal implements Runnable {
 	private Button buttonMock;
 	private Button btnInfo;
 
-	private ApplicationContext context = new ClassPathXmlApplicationContext("com/alberto/boedo/xml/beans.xml");
-	private GestorEventos gestor = context.getBean(GestorEventos.class);
+	private GestorEventos gestor = BeansFactory.getBean(GestorEventos.class);
 
 	private void getContent(final Shell shell) {
 

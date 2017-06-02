@@ -9,4 +9,6 @@ public interface GestorEventos {
 	public void modificoUsuario(List<String> valores, String mail);
 
 	public boolean correctLogin(String login, String passwd);
+
+	public void insertarFoto(String mail, String rutaFoto);
 }

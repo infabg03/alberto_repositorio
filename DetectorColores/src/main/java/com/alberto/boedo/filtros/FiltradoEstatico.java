@@ -35,16 +35,19 @@ public class FiltradoEstatico implements IfiltradoEstatico {
 
 	private static double value = 150;
 
+	@Override
 	public void aumentarValor() {
 		if (!(value > 245))
 			value += 10;
 	}
 
+	@Override
 	public void disminuirValor() {
 		if (!(value < 10))
 			value -= 10;
 	}
 
+	@Override
 	public void setValorOriginal() {
 		value = 150;
 	}

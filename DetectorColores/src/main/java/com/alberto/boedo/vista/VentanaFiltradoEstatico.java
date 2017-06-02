@@ -1,6 +1,11 @@
 package com.alberto.boedo.vista;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -16,16 +21,17 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.alberto.boedo.controlador.GestorEventos;
+import com.alberto.boedo.controlador.GestorEventosImpl;
 import com.alberto.boedo.factoria.BeansFactory;
 import com.alberto.boedo.filtros.FiltradoEstatico;
 import com.alberto.boedo.filtros.IfiltradoEstatico;
 import com.alberto.boedo.helpers.ColorHelper;
-import com.alberto.boedo.helpers.GoBackHelper;
+import com.alberto.boedo.helpers.FunctionsHelper;
 import com.alberto.boedo.helpers.ImageResizeHelper;
 import com.alberto.boedo.helpers.MessageDialogHelper;
 import com.alberto.boedo.helpers.WindowCenterHelper;
@@ -41,8 +47,10 @@ public class VentanaFiltradoEstatico implements Runnable {
 	private String selected;
 	private Shell shell;
 	private String passwd;
+	private Text textoFotoGuardar;
 
 	private IfiltradoEstatico filtradoEstatico = BeansFactory.getBean(FiltradoEstatico.class);
+	private GestorEventos gestor = BeansFactory.getBean(GestorEventos.class);
 
 	public void setFiltradoEstado(IfiltradoEstatico filtradoEstatico) {
 		this.filtradoEstatico = filtradoEstatico;
@@ -141,7 +149,6 @@ public class VentanaFiltradoEstatico implements Runnable {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				filtradoEstatico.aumentarValor();
-				System.out.println("El password es: " + passwd);
 
 			}
 
@@ -164,6 +171,40 @@ public class VentanaFiltradoEstatico implements Runnable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
+	public void funcionGuardar(ToolItem itemSave) {
+		itemSave.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					if (!(textoFotoGuardar.getText().length() == 0)) {
+						BufferedImage imagen = ImageIO.read(new File(listaFotos.get(1)));
+						StringBuilder rutaSave = new StringBuilder();
+						StringBuilder rutaSaveDirectory = new StringBuilder();
+						rutaSaveDirectory.append("C:\\fotos\\").append(passwd);
+						rutaSave.append("C:\\fotos\\").append(passwd).append("\\").append(textoFotoGuardar.getText())
+								.append(".jpg");
+						File directorio = new File(rutaSaveDirectory.toString());
+						directorio.mkdirs();
+						File file = new File(rutaSave.toString());
+						ImageIO.write(imagen, "jpg", file);
+						gestor.insertarFoto(passwd, rutaSave.toString());
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
 
 			}
@@ -229,16 +270,32 @@ public class VentanaFiltradoEstatico implements Runnable {
 		itemReload.setText(i18Message.RELOAD);
 		itemReload.setImage(imagenReload);
 
-		final ToolItem separator4 = new ToolItem(toolBar, SWT.SEPARATOR);
-		separator4.setWidth(550);
+		final ToolItem separator5 = new ToolItem(toolBar, SWT.SEPARATOR);
+		separator5.setWidth(60);
 
+		// Campo de texto para introducir donde queremos guardar la foto
+		ToolItem sep2 = new ToolItem(toolBar, SWT.SEPARATOR);
+		textoFotoGuardar = new Text(toolBar, SWT.NONE);
+		sep2.setWidth(textoFotoGuardar.getSize().x);
+		sep2.setControl(textoFotoGuardar);
+
+		ToolItem itemSave = new ToolItem(toolBar, SWT.PUSH);
+		Image imagenSave = new Image(Display.getCurrent(), i18Message.RUTA_SAVE);
+		itemSave.setToolTipText(i18Message.SAVE);
+		itemSave.setText(i18Message.SAVE);
+		itemSave.setImage(imagenSave);
+
+		final ToolItem separator4 = new ToolItem(toolBar, SWT.SEPARATOR);
+		separator4.setWidth(400);
+
+		// Creamos boton atras
 		ToolItem itemBack = new ToolItem(toolBar, SWT.PUSH);
 		Image imagenBack = new Image(Display.getCurrent(), i18Message.RUTA_BACK);
 		itemBack.setToolTipText(i18Message.BACK);
 		itemBack.setText(i18Message.BACK);
 		itemBack.setImage(imagenBack);
 
-		GoBackHelper.funcionAtras(shell, itemBack, passwd);
+		FunctionsHelper.funcionAtras(shell, itemBack, passwd);
 
 		toolBar.pack();
 
@@ -266,6 +323,7 @@ public class VentanaFiltradoEstatico implements Runnable {
 		funcionAumentar(itemPlus);
 		funcionDisminuir(itemMinus);
 		funcionRecargar(itemReload);
+		funcionGuardar(itemSave);
 
 	}
 
