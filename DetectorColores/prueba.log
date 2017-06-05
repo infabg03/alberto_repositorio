@@ -1,3 +1,18 @@
 08:14:39,926 ERROR BotonTextoTest:26 - Soy un error
 08:15:02,689 ERROR BotonTextoTest:26 - Soy un error
 09:12:14,713 ERROR BotonTextoTest:26 - Soy un error
+12:37:47,921  WARN GestorEventosImpl:52 - El password esta vacio
+12:48:45,087  WARN VentanaFiltradoEstatico:84 - No han seleccionado foto
+12:48:59,214  WARN VentanaCambioColores:197 - No se ha seleccionado foto
+13:24:51,346  WARN GestorEventosImpl:53 - El usuario no ha introducido su email
+13:25:55,033  WARN VentanaFiltradoEstatico:84 - No han seleccionado fotografia
+14:14:58,843  WARN VentanaCambioColores:197 - No han seleccionado fotografia
+14:23:59,140  WARN VentanaFiltradoEstatico:84 - No han seleccionado fotografia
+16:09:57,715 FATAL VentanaPrincipal:197 - Timed out after 30000 ms while waiting for a server that matches ReadPreferenceServerSelector{readPreference=primary}. Client view of cluster state is {type=UNKNOWN, servers=[{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused: connect}}]
+16:27:11,484  WARN VentanaCambioColores:199 - No han seleccionado fotografia
+16:27:49,713 FATAL VentanaPrincipal:138 - Exception sending message
+16:40:57,741  WARN VentanaPrincipal:37 - Cannot run program "src/resources/ejecMongo.bat": CreateProcess error=2, El sistema no puede encontrar el archivo especificado
+16:41:11,598  WARN VentanaPrincipal:37 - Cannot run program "src/resources/ejecMongo.bat": CreateProcess error=2, El sistema no puede encontrar el archivo especificado
+16:42:52,087  WARN GestorEventosImpl:53 - El usuario no ha introducido su email
+16:46:58,991  WARN GestorEventosImpl:53 - El usuario no ha introducido su email
+16:57:46,510  WARN GestorEventosImpl:53 - El usuario no ha introducido su email

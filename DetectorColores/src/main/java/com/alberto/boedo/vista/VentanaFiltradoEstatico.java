@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -26,7 +27,6 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import com.alberto.boedo.controlador.GestorEventos;
-import com.alberto.boedo.controlador.GestorEventosImpl;
 import com.alberto.boedo.factoria.BeansFactory;
 import com.alberto.boedo.filtros.FiltradoEstatico;
 import com.alberto.boedo.filtros.IfiltradoEstatico;
@@ -34,7 +34,7 @@ import com.alberto.boedo.helpers.ColorHelper;
 import com.alberto.boedo.helpers.FunctionsHelper;
 import com.alberto.boedo.helpers.ImageResizeHelper;
 import com.alberto.boedo.helpers.MessageDialogHelper;
-import com.alberto.boedo.helpers.WindowCenterHelper;
+import com.alberto.boedo.helpers.ShellHelper;
 import com.alberto.boedo.naming.i18Message;
 
 public class VentanaFiltradoEstatico implements Runnable {
@@ -51,6 +51,10 @@ public class VentanaFiltradoEstatico implements Runnable {
 
 	private IfiltradoEstatico filtradoEstatico = BeansFactory.getBean(FiltradoEstatico.class);
 	private GestorEventos gestor = BeansFactory.getBean(GestorEventos.class);
+	private FunctionsHelper funciones = BeansFactory.getBean(FunctionsHelper.class);
+	private ShellHelper shellHelper = BeansFactory.getBean(ShellHelper.class);
+	private final static Logger log = Logger.getLogger(VentanaFiltradoEstatico.class);
+	private ImageResizeHelper resizeHelper = BeansFactory.getBean(ImageResizeHelper.class);
 
 	public void setFiltradoEstado(IfiltradoEstatico filtradoEstatico) {
 		this.filtradoEstatico = filtradoEstatico;
@@ -70,14 +74,15 @@ public class VentanaFiltradoEstatico implements Runnable {
 			listaFotos = filtradoEstatico.conversor(selected, combo.getText(), passwd);
 
 			Image original = new Image(Display.getCurrent(), listaFotos.get(0));
-			original = ImageResizeHelper.resize(original, 580, 420);
+			original = resizeHelper.resize(original, 580, 420);
 			Image filtrada = new Image(Display.getCurrent(), listaFotos.get(1));
-			filtrada = ImageResizeHelper.resize(filtrada, 580, 420);
+			filtrada = resizeHelper.resize(filtrada, 580, 420);
 
 			labelFoto.setImage(original);
 			labelFoto2.setImage(filtrada);
 		} else {
 			MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_FOTO, i18Message.MSG_FOTO);
+			log.warn(i18Message.MSG_FOTO_LOG);
 		}
 	}
 
@@ -148,7 +153,7 @@ public class VentanaFiltradoEstatico implements Runnable {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				filtradoEstatico.aumentarValor();
+				filtradoEstatico.disminuirValor();
 
 			}
 
@@ -165,7 +170,7 @@ public class VentanaFiltradoEstatico implements Runnable {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				filtradoEstatico.disminuirValor();
+				filtradoEstatico.aumentarValor();
 
 			}
 
@@ -276,7 +281,7 @@ public class VentanaFiltradoEstatico implements Runnable {
 		// Campo de texto para introducir donde queremos guardar la foto
 		ToolItem sep2 = new ToolItem(toolBar, SWT.SEPARATOR);
 		textoFotoGuardar = new Text(toolBar, SWT.NONE);
-		sep2.setWidth(textoFotoGuardar.getSize().x);
+		sep2.setWidth(120);
 		sep2.setControl(textoFotoGuardar);
 
 		ToolItem itemSave = new ToolItem(toolBar, SWT.PUSH);
@@ -295,7 +300,7 @@ public class VentanaFiltradoEstatico implements Runnable {
 		itemBack.setText(i18Message.BACK);
 		itemBack.setImage(imagenBack);
 
-		FunctionsHelper.funcionAtras(shell, itemBack, passwd);
+		funciones.funcionAtras(shell, itemBack, passwd);
 
 		toolBar.pack();
 
@@ -311,11 +316,11 @@ public class VentanaFiltradoEstatico implements Runnable {
 		labelFoto2 = new Label(compositeFotos, SWT.NONE);
 
 		Image im2 = new Image(Display.getCurrent(), i18Message.RUTA_BLANCO);
-		im2 = ImageResizeHelper.resize(im2, 580, 420);
+		im2 = resizeHelper.resize(im2, 580, 420);
 		labelFoto.setImage(im2);
 
 		Image im3 = new Image(Display.getCurrent(), i18Message.RUTA_BLANCO);
-		im3 = ImageResizeHelper.resize(im3, 580, 420);
+		im3 = resizeHelper.resize(im3, 580, 420);
 		labelFoto2.setImage(im2);
 
 		// Zona donde implementamos los listeners
@@ -335,18 +340,12 @@ public class VentanaFiltradoEstatico implements Runnable {
 		shell.setSize(1200, 600);
 		shell.setBackground(ColorHelper.COLOR_BLACK);
 
-		// Deshabilita boton cerrado de la shell
-		shell.addShellListener(new ShellAdapter() {
-			@Override
-			public void shellClosed(ShellEvent e) {
-				e.doit = false;
-			}
-		});
+		shellHelper.noCerrarShell(shell);
 
 		createToolBar(shell);
 
 		// Centrar la ventana
-		WindowCenterHelper.centrarVentana(display, shell);
+		shellHelper.centrarVentana(display, shell);
 
 		shell.open();
 

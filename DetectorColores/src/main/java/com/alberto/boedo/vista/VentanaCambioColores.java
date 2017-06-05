@@ -6,11 +6,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.events.ShellAdapter;
-import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -20,18 +19,21 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Sash;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import com.alberto.boedo.componentes.BotonImagen;
+import com.alberto.boedo.controlador.GestorEventos;
+import com.alberto.boedo.factoria.BeansFactory;
 import com.alberto.boedo.filtros.CambiarColores;
 import com.alberto.boedo.helpers.ColorHelper;
 import com.alberto.boedo.helpers.FunctionsHelper;
 import com.alberto.boedo.helpers.ImageResizeHelper;
 import com.alberto.boedo.helpers.MessageDialogHelper;
-import com.alberto.boedo.helpers.WindowCenterHelper;
+import com.alberto.boedo.helpers.ShellHelper;
 import com.alberto.boedo.naming.i18Message;
 
 public class VentanaCambioColores implements Runnable {
@@ -54,6 +56,12 @@ public class VentanaCambioColores implements Runnable {
 	private String ruta;
 	private Text textoFotoGuardar;
 
+	private FunctionsHelper funciones = BeansFactory.getBean(FunctionsHelper.class);
+	private GestorEventos gestor = BeansFactory.getBean(GestorEventos.class);
+	private ShellHelper shellHelper = BeansFactory.getBean(ShellHelper.class);
+	private final static Logger log = Logger.getLogger(VentanaCambioColores.class);
+	private ImageResizeHelper resizeHelper = BeansFactory.getBean(ImageResizeHelper.class);
+
 	public VentanaCambioColores(String passwd) {
 		super();
 		this.passwd = passwd;
@@ -62,7 +70,7 @@ public class VentanaCambioColores implements Runnable {
 	public void funcionSetearFotos() {
 
 		Image foto = new Image(Display.getCurrent(), selected);
-		foto = ImageResizeHelper.resize(foto, 580, 420);
+		foto = resizeHelper.resize(foto, 580, 420);
 		labelFoto.setImage(foto);
 
 	}
@@ -111,10 +119,11 @@ public class VentanaCambioColores implements Runnable {
 						System.out.println("Se ha creado directorio " + rutaSaveDirectory.toString());
 						File file = new File(rutaSave.toString());
 						ImageIO.write(imagen, "jpg", file);
+						gestor.insertarFoto(passwd, rutaSave.toString());
 					}
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					log.warn(e1.getMessage());
 				}
 
 			}
@@ -147,7 +156,7 @@ public class VentanaCambioColores implements Runnable {
 		// Campo de texto para introducir donde queremos guardar la foto
 		ToolItem sep2 = new ToolItem(toolBar, SWT.SEPARATOR);
 		textoFotoGuardar = new Text(toolBar, SWT.NONE);
-		sep2.setWidth(textoFotoGuardar.getSize().x);
+		sep2.setWidth(200);
 		sep2.setControl(textoFotoGuardar);
 
 		// Zona donde creamos el boton guardar y su funcionalidad
@@ -160,7 +169,7 @@ public class VentanaCambioColores implements Runnable {
 		funcionGuardar(itemSave);
 
 		final ToolItem separator4 = new ToolItem(toolBar, SWT.SEPARATOR);
-		separator4.setWidth(400);
+		separator4.setWidth(300);
 
 		funcionAbrir(itemPush, parent);
 
@@ -171,7 +180,7 @@ public class VentanaCambioColores implements Runnable {
 		itemBack.setText(i18Message.BACK);
 		itemBack.setImage(imagenBack);
 
-		FunctionsHelper.funcionAtras(shell, itemBack, passwd);
+		funciones.funcionAtras(shell, itemBack, passwd);
 
 	}
 
@@ -183,11 +192,11 @@ public class VentanaCambioColores implements Runnable {
 				if (selected != null) {
 					ruta = CambiarColores.conversor(selected, opcion);
 					Image foto = new Image(Display.getCurrent(), ruta);
-					foto = ImageResizeHelper.resize(foto, 580, 420);
+					foto = resizeHelper.resize(foto, 580, 420);
 					labelFoto.setImage(foto);
 				} else {
 					MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_FOTO, i18Message.MSG_FOTO);
-					MessageBox dialog = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
+					log.warn(i18Message.MSG_FOTO_LOG);
 				}
 
 			}
@@ -238,13 +247,7 @@ public class VentanaCambioColores implements Runnable {
 		shell.setSize(700, 500);
 		shell.setBackground(ColorHelper.COLOR_BLACK);
 
-		// Deshabilita boton cerrado de la shell
-		shell.addShellListener(new ShellAdapter() {
-			@Override
-			public void shellClosed(ShellEvent e) {
-				e.doit = false;
-			}
-		});
+		shellHelper.noCerrarShell(shell);
 
 		createToolBar(shell);
 
@@ -269,11 +272,11 @@ public class VentanaCambioColores implements Runnable {
 		labelFoto = new Label(compositeImage, SWT.NONE);
 
 		Image im1 = new Image(display, i18Message.RUTA_BLANCO);
-		im1 = ImageResizeHelper.resize(im1, 580, 420);
+		im1 = resizeHelper.resize(im1, 580, 420);
 		labelFoto.setImage(im1);
 
 		// Centrar la ventana
-		WindowCenterHelper.centrarVentana(display, shell);
+		shellHelper.centrarVentana(display, shell);
 
 		shell.open();
 

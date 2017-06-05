@@ -22,9 +22,10 @@ import com.alberto.boedo.componentes.BotonImagen;
 import com.alberto.boedo.componentes.BotonTexto;
 import com.alberto.boedo.componentes.LabeledEditText;
 import com.alberto.boedo.controlador.GestorEventos;
+import com.alberto.boedo.factoria.BeansFactory;
 import com.alberto.boedo.helpers.MessageDialogHelper;
+import com.alberto.boedo.helpers.ShellHelper;
 import com.alberto.boedo.helpers.ValidarCamposHelper;
-import com.alberto.boedo.helpers.WindowCenterHelper;
 import com.alberto.boedo.naming.i18Message;
 
 public class VentanaRegistroModal extends Dialog {
@@ -36,6 +37,7 @@ public class VentanaRegistroModal extends Dialog {
 
 	ApplicationContext context = new ClassPathXmlApplicationContext("com/alberto/boedo/xml/beans.xml");
 	GestorEventos gestor = context.getBean(GestorEventos.class);
+	private ShellHelper shellHelper = BeansFactory.getBean(ShellHelper.class);
 
 	public VentanaRegistroModal(Shell parent, boolean edicion) {
 		super(parent, SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
@@ -58,7 +60,7 @@ public class VentanaRegistroModal extends Dialog {
 		if (opcion == 1)
 			MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_USER, i18Message.MSG_OK_USER);
 		else
-			MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_USER, i18Message.MSG_BAD_USER);
+			MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_USER, i18Message.MSG_MOD_USER);
 	}
 
 	public void open() {
@@ -73,16 +75,11 @@ public class VentanaRegistroModal extends Dialog {
 	private void createContents() {
 		shell = new Shell(getParent(), getStyle());
 
-		shell.addShellListener(new ShellAdapter() {
-			@Override
-			public void shellClosed(ShellEvent e) {
-				e.doit = false;
-			}
-		});
+		shellHelper.noCerrarShell(shell);
 
 		shell.setSize(418, 600);
 
-		WindowCenterHelper.centrarVentana(display, shell);
+		shellHelper.centrarVentana(display, shell);
 
 		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.marginWidth = 5;
@@ -126,44 +123,50 @@ public class VentanaRegistroModal extends Dialog {
 		final LabeledEditText passwdTxt = new LabeledEditText(shell, SWT.NONE, "", i18Message.PASSWD, true, 50);
 		final LabeledEditText telefonoTxt = new LabeledEditText(shell, SWT.NONE, "", i18Message.TLFNO, false, 50);
 
+		if (edicion) {
+			emailTxt.setDisable();
+		}
+
 		Button botonRegistro = new BotonTexto().devuelveBotonTexto(shell, SWT.NONE, i18Message.CONFIRM);
 
 		List<String> lista = new ArrayList<String>();
-		lista.add(nombreTxt.getText());
-		lista.add(apellidosTxt.getText());
-		lista.add(emailTxt.getText());
-		lista.add(passwdTxt.getText());
-		lista.add(telefonoTxt.getText());
+		lista.add(nombreTxt.getTexto());
+		lista.add(apellidosTxt.getTexto());
+		lista.add(emailTxt.getTexto());
+		lista.add(passwdTxt.getTexto());
+		lista.add(telefonoTxt.getTexto());
 
 		botonRegistro.setLayoutData(new GridData(SWT.BEGINNING, SWT.END, true, true));
 
-		// FIXME: al registrarse con un password ya existente debe dar error y
-		// advertir
 		botonRegistro.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 
-				if (camposCorrectos(passwdTxt.getText(), emailTxt.getText(), telefonoTxt.getText())) {
+				if (camposCorrectos(passwdTxt.getTexto(), emailTxt.getTexto(), telefonoTxt.getTexto())) {
 
 					if (!edicion) {
-						List<String> lista = new ArrayList<String>();
-						lista.add(nombreTxt.getText());
-						lista.add(apellidosTxt.getText());
-						lista.add(emailTxt.getText());
-						lista.add(passwdTxt.getText());
-						lista.add(telefonoTxt.getText());
-						gestor.insertaUsuario(lista);
-						registroOk(1);
-						shell.dispose();
+						if (!gestor.usuarioExiste(emailTxt.getTexto())) {
+							List<String> lista = new ArrayList<String>();
+							lista.add(nombreTxt.getTexto());
+							lista.add(apellidosTxt.getTexto());
+							lista.add(emailTxt.getTexto());
+							lista.add(passwdTxt.getTexto());
+							lista.add(telefonoTxt.getTexto());
+							gestor.insertaUsuario(lista);
+							registroOk(1);
+							shell.dispose();
+						} else {
+							MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_USER, i18Message.MSG_BAD_USER);
+						}
 
 					} else {
 						List<String> lista = new ArrayList<String>();
-						lista.add(nombreTxt.getText());
-						lista.add(apellidosTxt.getText());
-						lista.add(emailTxt.getText());
-						lista.add(passwdTxt.getText());
-						lista.add(telefonoTxt.getText());
+						lista.add(nombreTxt.getTexto());
+						lista.add(apellidosTxt.getTexto());
+						lista.add(emailTxt.getTexto());
+						lista.add(passwdTxt.getTexto());
+						lista.add(telefonoTxt.getTexto());
 						gestor.modificoUsuario(lista, passwd);
 						registroOk(2);
 						shell.dispose();

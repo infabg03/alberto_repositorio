@@ -46,6 +46,8 @@ public class i18Message {
 
 	public static final String RUTA_BACK = "src/resources/back.png";
 
+	public static final String RUTA_BACK16 = "src/resources/atras.png";
+
 	public static final String RUTA_SAVE = "src/resources/floppy.png";
 
 	public static final String RUTA_PLUS = "src/resources/add.png";
@@ -55,6 +57,8 @@ public class i18Message {
 	public static final String RUTA_RELOAD = "src/resources/refresh.png";
 
 	public static final String MSG_FOTO = "Debe seleccionar previamente una fotografia";
+
+	public static final String MSG_FOTO_LOG = "No han seleccionado fotografia";
 
 	public static String INFO_FOTO = "Informacion de fotografia";
 
@@ -142,7 +146,9 @@ public class i18Message {
 
 	public static final String MSG_OK_USER = "El registro se ha realizado correctamente";
 
-	public static final String MSG_BAD_USER = "La modificacion se ha realizado correctamente";
+	public static final String MSG_MOD_USER = "La modificacion se ha realizado correctamente";
+
+	public static final String MSG_BAD_USER = "El usuario ya existe";
 
 	public static final String FORMAT_ERROR = "Error de formato";
 
@@ -169,5 +175,7 @@ public class i18Message {
 	public static final String RUTA_BTN_VOLVER = "src/resources/return.png";
 
 	public static final String LINK_TXT = "¿No estas registrado? <A>Registrate ahora</A>";
+
+	public static final String MSG_EMAIL_VACIO = "El usuario no ha introducido su email";
 
 }

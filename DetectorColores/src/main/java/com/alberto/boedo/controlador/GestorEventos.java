@@ -11,4 +11,8 @@ public interface GestorEventos {
 	public boolean correctLogin(String login, String passwd);
 
 	public void insertarFoto(String mail, String rutaFoto);
+
+	public boolean tieneFotos(String mail);
+
+	public boolean usuarioExiste(String mail);
 }

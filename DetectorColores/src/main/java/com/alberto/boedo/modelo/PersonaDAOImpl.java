@@ -38,4 +38,12 @@ public class PersonaDAOImpl implements PersonaDAO {
 
 	}
 
+	@Override
+	public int contarPersonas(String email) {
+		Query<Persona> query = this.ds.createQuery(Persona.class);
+		query.field("_id").equal(email);
+		List<Persona> miLista = query.asList();
+		return miLista.size();
+	}
+
 }

@@ -18,25 +18,24 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import com.alberto.boedo.componentes.BotonImagen;
+import com.alberto.boedo.controlador.GestorEventos;
+import com.alberto.boedo.factoria.BeansFactory;
 import com.alberto.boedo.filtros.FiltradoDinamico;
 import com.alberto.boedo.helpers.ColorHelper;
-import com.alberto.boedo.helpers.WindowCenterHelper;
+import com.alberto.boedo.helpers.ShellHelper;
 import com.alberto.boedo.naming.i18Message;
 
 public class VentanaSelectora implements Runnable {
-	Shell shell;
-	Display display;
-	String passwd;
-	boolean pintoEditar;
-
-	public VentanaSelectora(boolean pintoeditar) {
-		this.pintoEditar = pintoeditar;
-	}
+	private Shell shell;
+	private Display display;
+	private String passwd;
+	private boolean pintoEditar;
+	private GestorEventos gestor = BeansFactory.getBean(GestorEventos.class);
+	private ShellHelper shellHelper = BeansFactory.getBean(ShellHelper.class);
 
 	public VentanaSelectora(String passwd) {
 		super();
 		this.passwd = passwd;
-		pintoEditar = true;
 	}
 
 	public void ponerVisibles(List<Button> arrayBtn, boolean visible) {
@@ -162,11 +161,6 @@ public class VentanaSelectora implements Runnable {
 		final Button btnSalir = new BotonImagen().getBotonImagen(display, composite, i18Message.RUTA_BTN_EXIT);
 		btnSalir.setToolTipText(i18Message.SALIR);
 
-		// Si entramos sin acceso al servidor, es decir, con una configuracion
-		// mock, no podemos editar el perfil
-		if (!pintoEditar)
-			btnEditar.setEnabled(false);
-
 		Composite compositeSup = new Composite(shell, SWT.NONE);
 		GridLayout gridLayout2 = new GridLayout(5, false);
 		gridLayout2.marginTop = 20;
@@ -196,6 +190,10 @@ public class VentanaSelectora implements Runnable {
 		final Button btnGaleria = new BotonImagen().getBotonImagen(display, compositeSup, i18Message.RUTA_BTN_GALERIA);
 		listaBotones.add(btnGaleria);
 		btnGaleria.setToolTipText(i18Message.GALERIA);
+
+		if (!gestor.tieneFotos(passwd)) {
+			btnGaleria.setEnabled(false);
+		}
 
 		ponerVisibles(listaBotones, false);
 
@@ -242,17 +240,12 @@ public class VentanaSelectora implements Runnable {
 		shell.setBackground(ColorHelper.COLOR_BLACK);
 
 		// Deshabilita boton cerrado de la shell
-		shell.addShellListener(new ShellAdapter() {
-			@Override
-			public void shellClosed(ShellEvent e) {
-				e.doit = false;
-			}
-		});
+		shellHelper.noCerrarShell(shell);
 
 		getContent(shell);
 
 		// Centrar la ventana
-		WindowCenterHelper.centrarVentana(display, shell);
+		shellHelper.centrarVentana(display, shell);
 
 		shell.open();
 

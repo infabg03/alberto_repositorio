@@ -26,10 +26,6 @@ public class LabeledCombo {
 
 		Composite composite = new Composite(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(2, false);
-		// gridLayout.marginWidth = 5;
-		// gridLayout.marginHeight = 5;
-		// gridLayout.verticalSpacing = 0;
-		// gridLayout.horizontalSpacing = 0;
 		composite.setLayout(gridLayout);
 
 		Label label = new Label(composite, SWT.NONE);

@@ -8,4 +8,6 @@ public interface PersonaDAO {
 
 	public void deletePersona(String mail);
 
+	public int contarPersonas(String email);
+
 }

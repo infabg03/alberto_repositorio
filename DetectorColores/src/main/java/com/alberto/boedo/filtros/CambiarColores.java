@@ -17,14 +17,19 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
+import org.eclipse.swt.internal.win32.LOGBRUSH;
+
 import com.alberto.boedo.naming.i18Message;
+import com.alberto.boedo.vista.VentanaCambioColores;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 public class CambiarColores {
 
+	private final static Logger log = Logger.getLogger(CambiarColores.class);
+
 	public static String conversor(String ruta, int opcion) {
 
-		// Si no cargamos asi las imagenes casca
 		IplImage imagen;
 		String foto = "";
 
@@ -81,8 +86,7 @@ public class CambiarColores {
 			cvWaitKey();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn(e.getMessage());
 		}
 		return foto;
 

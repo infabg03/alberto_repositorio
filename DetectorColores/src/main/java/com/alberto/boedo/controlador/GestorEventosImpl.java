@@ -3,19 +3,23 @@ package com.alberto.boedo.controlador;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mongodb.morphia.FindAndModifyOptions;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alberto.boedo.modelo.Foto;
 import com.alberto.boedo.modelo.Persona;
 import com.alberto.boedo.modelo.PersonaDAO;
+import com.alberto.boedo.naming.i18Message;
+import com.alberto.boedo.vista.VentanaPrincipal;
 
 @Component
 public class GestorEventosImpl implements GestorEventos {
 
 	@Autowired
 	private PersonaDAO personaDAO;
+
+	private final static Logger log = Logger.getLogger(GestorEventosImpl.class);
 
 	@Override
 	public void insertaUsuario(List<String> campos) {
@@ -46,7 +50,7 @@ public class GestorEventosImpl implements GestorEventos {
 			return login.matches(personaDAO.getPersona(login).getEmail())
 					&& passwd.matches(personaDAO.getPersona(login).getPassword());
 		} catch (NullPointerException e) {
-			// System.out.println("Lista vacia");
+			log.warn(i18Message.MSG_EMAIL_VACIO);
 			return false;
 		}
 
@@ -61,6 +65,19 @@ public class GestorEventosImpl implements GestorEventos {
 		fotos.add(nuevaFoto);
 		personaDAO.deletePersona(mail);
 		personaDAO.addPersona(p);
+	}
+
+	@Override
+	public boolean tieneFotos(String mail) {
+		Persona p = personaDAO.getPersona(mail);
+		List<Foto> fotos = p.getFotos();
+		return fotos.size() > 1;
+	}
+
+	@Override
+	public boolean usuarioExiste(String mail) {
+		int cantidad = personaDAO.contarPersonas(mail);
+		return cantidad == 0 ? false : true;
 	}
 
 }

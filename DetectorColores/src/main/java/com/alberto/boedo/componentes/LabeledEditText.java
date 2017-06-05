@@ -21,6 +21,10 @@ public class LabeledEditText {
 
 	private boolean escribo = false;
 
+	public void setText(Text text) {
+		this.text = text;
+	}
+
 	public LabeledEditText(Composite parent, int estilo, String textoInterior, String textoLabel, boolean passwd,
 			int ancho) {
 		this.parent = parent;
@@ -76,8 +80,12 @@ public class LabeledEditText {
 
 	}
 
-	public String getText() {
+	public String getTexto() {
 		return text.getText();
+	}
+
+	public Text getText() {
+		return text;
 	}
 
 	public void setText(String texto) {

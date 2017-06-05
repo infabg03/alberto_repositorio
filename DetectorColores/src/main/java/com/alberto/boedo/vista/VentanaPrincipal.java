@@ -1,5 +1,8 @@
 package com.alberto.boedo.vista;
 
+import java.io.IOException;
+
+import org.apache.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -13,8 +16,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.alberto.boedo.componentes.BotonImagen;
 import com.alberto.boedo.componentes.BotonTexto;
@@ -23,16 +24,14 @@ import com.alberto.boedo.controlador.GestorEventos;
 import com.alberto.boedo.factoria.BeansFactory;
 import com.alberto.boedo.helpers.ColorHelper;
 import com.alberto.boedo.helpers.MessageDialogHelper;
-import com.alberto.boedo.helpers.WindowCenterHelper;
+import com.alberto.boedo.helpers.ShellHelper;
 import com.alberto.boedo.naming.i18Message;
 
 public class VentanaPrincipal implements Runnable {
 
-	private Button buttonSever;
-	private Button buttonMock;
-	private Button btnInfo;
-
 	private GestorEventos gestor = BeansFactory.getBean(GestorEventos.class);
+	private final static Logger log = Logger.getLogger(VentanaPrincipal.class);
+	private static boolean ejecutado = false;
 
 	private void getContent(final Shell shell) {
 
@@ -45,9 +44,6 @@ public class VentanaPrincipal implements Runnable {
 		composite.setBackground(ColorHelper.COLOR_WHITE);
 
 		final LabeledEditText login = new LabeledEditText(composite, SWT.NONE, "", i18Message.lOGIN, false, 45);
-
-		Composite radioGroup = new Composite(composite, SWT.NONE);
-		radioGroup.setLayout(new GridLayout(3, true));
 
 		Composite compoPasswd = new Composite(shell, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(1, false);
@@ -69,30 +65,15 @@ public class VentanaPrincipal implements Runnable {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				if (buttonSever.getSelection()) {
-					if (gestor.correctLogin(login.getText(), passwd.getText())) {
-						Thread tVentanaSelectora = new Thread(new VentanaSelectora(login.getText()));
-						Display.getCurrent().dispose();
-						tVentanaSelectora.run();
-					} else {
-						MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_ACCESO, i18Message.MSG_ACCESO);
+				if (gestor.correctLogin(login.getTexto(), passwd.getTexto())) {
+					Thread tVentanaSelectora = new Thread(new VentanaSelectora(login.getTexto()));
+					Display.getCurrent().dispose();
+					tVentanaSelectora.run();
+				} else {
+					MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_ACCESO, i18Message.MSG_ACCESO);
 
-						login.setText("");
-						passwd.setText("");
-					}
-
-				} else if (buttonMock.getSelection()) {
-					if (login.getText().matches(i18Message.MOCK_MAIL)
-							&& passwd.getText().matches(i18Message.MOCK_PASSWD)) {
-						Thread tVentanaSelectora = new Thread(new VentanaSelectora(false));
-						Display.getCurrent().dispose();
-						tVentanaSelectora.run();
-					} else {
-						MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_ACCESO, i18Message.MOCK_ACCES_ERROR);
-						VentanaPrincipal.this.btnInfo.forceFocus();
-						login.setText("");
-						passwd.setText("");
-					}
+					login.setText("");
+					passwd.setText("");
 				}
 
 			}
@@ -125,52 +106,25 @@ public class VentanaPrincipal implements Runnable {
 				});
 			}
 		});
-
-		buttonSever = new Button(radioGroup, SWT.RADIO);
-		buttonSever.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
-		buttonSever.setText(i18Message.SERVER);
-		buttonSever.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				link.setEnabled(true);
-			}
-		});
-
-		buttonSever.setSelection(true);
-
-		buttonMock = new Button(radioGroup, SWT.RADIO);
-		buttonMock.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
-		buttonMock.setText(i18Message.MOCK);
-		buttonMock.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				link.setEnabled(false);
-			}
-		});
-
-		VentanaPrincipal.this.btnInfo = new BotonImagen().getBotonImagen(Display.getCurrent(), radioGroup,
-				i18Message.RUTA_INFO);
-		VentanaPrincipal.this.btnInfo.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_ACCESO, i18Message.MSG_MOCK);
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
 	}
 
 	public static void main(String[] args) {
 		final Display display = new Display();
+
+		System.out.println("El valor de ejecutado es: " + ejecutado);
+		if (!ejecutado) {
+			// Levantamos el servidor
+			try {
+				Runtime.getRuntime().exec("src/resources/bat/ejecMongo.bat");
+				ejecutado = true;
+			} catch (IOException e1) {
+				log.error(e1.getMessage());
+			}
+		}
+
 		final VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
 		final Shell shell = new Shell(display, SWT.MIN);
+		final ShellHelper shellHelper = BeansFactory.getBean(ShellHelper.class);
 		shell.setLayout(new GridLayout(1, true));
 		shell.setSize(500, 300);
 		shell.setBackgroundImage(new Image(display, new ImageData(i18Message.RUTA_FONDO)));
@@ -182,7 +136,7 @@ public class VentanaPrincipal implements Runnable {
 		ventanaPrincipal.getContent(shell);
 
 		// Centrar la ventana
-		WindowCenterHelper.centrarVentana(display, shell);
+		shellHelper.centrarVentana(display, shell);
 
 		shell.open();
 
@@ -193,7 +147,7 @@ public class VentanaPrincipal implements Runnable {
 					display.sleep();
 				}
 			} catch (Exception e) {
-
+				log.fatal(e.getMessage());
 			}
 
 		}

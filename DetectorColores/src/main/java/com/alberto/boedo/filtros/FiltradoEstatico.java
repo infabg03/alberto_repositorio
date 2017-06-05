@@ -17,9 +17,11 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.alberto.boedo.naming.i18Message;
+import com.alberto.boedo.vista.VentanaCambioColores;
 import com.googlecode.javacv.cpp.opencv_core.CvScalar;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
@@ -34,6 +36,7 @@ import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
 public class FiltradoEstatico implements IfiltradoEstatico {
 
 	private static double value = 150;
+	private final static Logger log = Logger.getLogger(FiltradoEstatico.class);
 
 	@Override
 	public void aumentarValor() {
@@ -110,9 +113,7 @@ public class FiltradoEstatico implements IfiltradoEstatico {
 
 			return parImagenes;
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			System.out.println("No ha introducido ninguna foto");
+			log.warn(e.getMessage());
 		}
 
 		return null;
