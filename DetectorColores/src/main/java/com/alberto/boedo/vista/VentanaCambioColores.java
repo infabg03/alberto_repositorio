@@ -59,14 +59,24 @@ public class VentanaCambioColores implements Runnable {
 	private FunctionsHelper funciones = BeansFactory.getBean(FunctionsHelper.class);
 	private GestorEventos gestor = BeansFactory.getBean(GestorEventos.class);
 	private ShellHelper shellHelper = BeansFactory.getBean(ShellHelper.class);
+	private CambiarColores cambiarColores = BeansFactory.getBean(CambiarColores.class);
 	private final static Logger log = Logger.getLogger(VentanaCambioColores.class);
 	private ImageResizeHelper resizeHelper = BeansFactory.getBean(ImageResizeHelper.class);
 
+	/**
+	 * Crea una ventana cambio colores.
+	 * 
+	 * @param passwd
+	 *            Email del usuario.
+	 */
 	public VentanaCambioColores(String passwd) {
 		super();
 		this.passwd = passwd;
 	}
 
+	/**
+	 * Funcion con setea una foto en una etiqueta.
+	 */
 	public void funcionSetearFotos() {
 
 		Image foto = new Image(Display.getCurrent(), selected);
@@ -75,6 +85,14 @@ public class VentanaCambioColores implements Runnable {
 
 	}
 
+	/**
+	 * Funcion encargada de la seleccion de fotografias.
+	 * 
+	 * @param itemPush
+	 *            El boton de abrir ficheros.
+	 * @param parent
+	 *            El padre del que colgara.
+	 */
 	public void funcionAbrir(ToolItem itemPush, final Composite parent) {
 
 		itemPush.addSelectionListener(new SelectionListener() {
@@ -101,6 +119,12 @@ public class VentanaCambioColores implements Runnable {
 
 	}
 
+	/**
+	 * Funcion encargada de guardar las fotos en disco.
+	 * 
+	 * @param itemSave
+	 *            El boton de guardado.
+	 */
 	public void funcionGuardar(ToolItem itemSave) {
 		itemSave.addSelectionListener(new SelectionListener() {
 
@@ -116,7 +140,6 @@ public class VentanaCambioColores implements Runnable {
 								.append(".jpg");
 						File directorio = new File(rutaSaveDirectory.toString());
 						directorio.mkdirs();
-						System.out.println("Se ha creado directorio " + rutaSaveDirectory.toString());
 						File file = new File(rutaSave.toString());
 						ImageIO.write(imagen, "jpg", file);
 						gestor.insertarFoto(passwd, rutaSave.toString());
@@ -136,6 +159,12 @@ public class VentanaCambioColores implements Runnable {
 		});
 	}
 
+	/**
+	 * Funcion encargada de la creacion de la toolbar.
+	 * 
+	 * @param parent
+	 *            Composite padre del que colgara la toolbar.
+	 */
 	public void createToolBar(final Composite parent) {
 
 		// Creamos la toolbar
@@ -184,13 +213,21 @@ public class VentanaCambioColores implements Runnable {
 
 	}
 
+	/**
+	 * Funcion que se encarga de manejar los eventos tras pulsar alguno de los
+	 * botones de filtrado.
+	 * 
+	 * @param opcion
+	 *            Opcion de filtrado.
+	 * @return Listener para los botones de filtrado.
+	 */
 	public SelectionListener listenerBotones(final int opcion) {
 		return new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				if (selected != null) {
-					ruta = CambiarColores.conversor(selected, opcion);
+					ruta = cambiarColores.conversor(selected, opcion);
 					Image foto = new Image(Display.getCurrent(), ruta);
 					foto = resizeHelper.resize(foto, 580, 420);
 					labelFoto.setImage(foto);
@@ -210,6 +247,22 @@ public class VentanaCambioColores implements Runnable {
 
 	}
 
+	/**
+	 * Añade listeners a los botones de filtrado.
+	 * 
+	 * @param bOriginal
+	 *            Boton con filtro original.
+	 * @param bCie
+	 *            Boton con filtro Cie.
+	 * @param bGray
+	 *            Boton con filtro escala de grises.
+	 * @param bHls
+	 *            Boton con filtro Hls.
+	 * @param bLuv
+	 *            Boton con filtro Luv.
+	 * @param bHsv
+	 *            Boton con filtro Hsv.
+	 */
 	public void addListenersBotonesEstilos(Button bOriginal, Button bCie, Button bGray, Button bHls, Button bLuv,
 			Button bHsv) {
 
@@ -221,6 +274,12 @@ public class VentanaCambioColores implements Runnable {
 		bHsv.addSelectionListener(listenerBotones(HSV));
 	}
 
+	/**
+	 * Crea los botones de filtrado.
+	 * 
+	 * @param parent
+	 *            Composite del que colgaran los botones.
+	 */
 	public void createBotonesEsilo(Composite parent) {
 
 		Button b1 = new BotonImagen().getBotonImagen(Display.getCurrent(), parent, i18Message.RUTA_BTN_ORIGINAL);

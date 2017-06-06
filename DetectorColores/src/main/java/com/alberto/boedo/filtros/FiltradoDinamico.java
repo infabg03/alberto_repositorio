@@ -20,6 +20,12 @@ import com.googlecode.javacv.cpp.opencv_highgui.CvCapture;
 
 public class FiltradoDinamico {
 
+	/**
+	 * Muestra dos ventanas, una en la que se ve la imagen real captada por la
+	 * webcam y otra donde solo se ven los objetos del color por el que estamos
+	 * filtrando.
+	 * 
+	 */
 	public static void execute() {
 		opencv_core.IplImage img1, imghsv, imgbin;
 

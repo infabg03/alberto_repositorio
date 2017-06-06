@@ -11,6 +11,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShellHelper {
 
+	/**
+	 * Evita que se cierre la ventana al pulsar el boton X.
+	 * 
+	 * @param shell
+	 *            Ventana.
+	 */
 	public void noCerrarShell(Shell shell) {
 		shell.addShellListener(new ShellAdapter() {
 			@Override
@@ -20,6 +26,14 @@ public class ShellHelper {
 		});
 	}
 
+	/**
+	 * Centra la ventana.
+	 * 
+	 * @param display
+	 *            Display asociado a la ventana.
+	 * @param shell
+	 *            Ventana.
+	 */
 	public void centrarVentana(Display display, Shell shell) {
 		Monitor primary = display.getPrimaryMonitor();
 		Rectangle bounds = primary.getBounds();

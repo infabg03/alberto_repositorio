@@ -9,6 +9,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImageResizeHelper {
 
+	/**
+	 * Redimensiona el tamaño de imagen.
+	 * 
+	 * @param image
+	 *            Imagen a redimensionar.
+	 * @param width
+	 *            Anchura deseada.
+	 * @param height
+	 *            Altura deseada.
+	 * @return Imagen redimensionada.
+	 */
 	public Image resize(Image image, int width, int height) {
 		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);

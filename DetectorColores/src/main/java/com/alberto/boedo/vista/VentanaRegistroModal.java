@@ -39,6 +39,14 @@ public class VentanaRegistroModal extends Dialog {
 	GestorEventos gestor = context.getBean(GestorEventos.class);
 	private ShellHelper shellHelper = BeansFactory.getBean(ShellHelper.class);
 
+	/**
+	 * Crea una nueva ventana de registro modal.
+	 * 
+	 * @param parent
+	 *            Composite padre de la ventana.
+	 * @param edicion
+	 *            Si esta abierta en modo edicion o no.
+	 */
 	public VentanaRegistroModal(Shell parent, boolean edicion) {
 		super(parent, SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 		display = parent.getDisplay();
@@ -46,6 +54,16 @@ public class VentanaRegistroModal extends Dialog {
 		this.edicion = edicion;
 	}
 
+	/**
+	 * Crea una nueva ventana de registro modal.
+	 * 
+	 * @param parent
+	 *            Composite padre de la ventana.
+	 * @param edicion
+	 *            Si esta abierta en modo edicion o no.
+	 * @param passwd
+	 *            Email del usuario.
+	 */
 	public VentanaRegistroModal(Shell parent, boolean edicion, String passwd) {
 		super(parent, SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 		display = parent.getDisplay();
@@ -55,6 +73,13 @@ public class VentanaRegistroModal extends Dialog {
 
 	}
 
+	/**
+	 * Crea un mensaje de aviso referente a la correcta o no ejecucion del
+	 * registro.
+	 * 
+	 * @param opcion
+	 *            Opcion que controla que mensaje mostar.
+	 */
 	public void registroOk(int opcion) {
 
 		if (opcion == 1)
@@ -63,6 +88,10 @@ public class VentanaRegistroModal extends Dialog {
 			MessageDialogHelper.aceptarDialog(shell, i18Message.INFO_USER, i18Message.MSG_MOD_USER);
 	}
 
+	/**
+	 * Funcion que abre la ventana.
+	 * 
+	 */
 	public void open() {
 		shell.open();
 		while (!shell.isDisposed()) {
@@ -72,6 +101,10 @@ public class VentanaRegistroModal extends Dialog {
 		}
 	}
 
+	/**
+	 * Funcion que crea los contenidos de la ventana.
+	 * 
+	 */
 	private void createContents() {
 		shell = new Shell(getParent(), getStyle());
 
@@ -143,7 +176,10 @@ public class VentanaRegistroModal extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 
-				if (camposCorrectos(passwdTxt.getTexto(), emailTxt.getTexto(), telefonoTxt.getTexto())) {
+				String contra = "";
+				contra = edicion == true ? passwd : emailTxt.getTexto();
+
+				if (camposCorrectos(passwdTxt.getTexto(), contra, telefonoTxt.getTexto())) {
 
 					if (!edicion) {
 						if (!gestor.usuarioExiste(emailTxt.getTexto())) {
@@ -164,7 +200,7 @@ public class VentanaRegistroModal extends Dialog {
 						List<String> lista = new ArrayList<String>();
 						lista.add(nombreTxt.getTexto());
 						lista.add(apellidosTxt.getTexto());
-						lista.add(emailTxt.getTexto());
+						lista.add(contra);
 						lista.add(passwdTxt.getTexto());
 						lista.add(telefonoTxt.getTexto());
 						gestor.modificoUsuario(lista, passwd);
@@ -184,6 +220,18 @@ public class VentanaRegistroModal extends Dialog {
 
 	}
 
+	/**
+	 * Funcion que comprueba el correcto contenido de los campos.
+	 * 
+	 * @param passwd
+	 *            Password introducido.
+	 * @param mail
+	 *            Email introducido.
+	 * @param tlfn
+	 *            Telefono introducido.
+	 * @return Valor booleano correspondiente a la correcion de formato de los
+	 *         campos comprobados.
+	 */
 	private boolean camposCorrectos(String passwd, String mail, String tlfn) {
 		if (!ValidarCamposHelper.longitudPasswd(passwd)) {
 			MessageDialogHelper.aceptarDialog(shell, i18Message.FORMAT_ERROR, i18Message.MSG_ERROR_LONG_PASSWD);

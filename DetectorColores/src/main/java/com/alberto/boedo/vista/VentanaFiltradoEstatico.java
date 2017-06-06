@@ -56,19 +56,39 @@ public class VentanaFiltradoEstatico implements Runnable {
 	private final static Logger log = Logger.getLogger(VentanaFiltradoEstatico.class);
 	private ImageResizeHelper resizeHelper = BeansFactory.getBean(ImageResizeHelper.class);
 
+	/**
+	 * Setea un objeto filtradoEstatico.
+	 * 
+	 * @param filtradoEstatico
+	 *            El objeto filtrado estatico.
+	 */
 	public void setFiltradoEstado(IfiltradoEstatico filtradoEstatico) {
 		this.filtradoEstatico = filtradoEstatico;
 	}
 
+	/**
+	 * Crea una nueva ventana filtrado estatico.
+	 * 
+	 */
 	public VentanaFiltradoEstatico() {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Crea una nueva ventana filtrado estatico.
+	 * 
+	 * @param passwd
+	 *            Email del usuario.
+	 */
 	public VentanaFiltradoEstatico(String passwd) {
 		super();
 		this.passwd = passwd;
 	}
 
+	/**
+	 * Setea las fotos en las label correspondientes.
+	 * 
+	 */
 	public void funcionSetearFotos() {
 		if (selected != null) {
 			listaFotos = filtradoEstatico.conversor(selected, combo.getText(), passwd);
@@ -86,6 +106,10 @@ public class VentanaFiltradoEstatico implements Runnable {
 		}
 	}
 
+	/**
+	 * Listener para el cambio de seleccion en el combo.
+	 * 
+	 */
 	public void funcionCambioCombo() {
 		combo.addSelectionListener(new SelectionListener() {
 
@@ -103,6 +127,14 @@ public class VentanaFiltradoEstatico implements Runnable {
 		});
 	}
 
+	/**
+	 * Listener para el boton de seleccion de fichero.
+	 * 
+	 * @param itemPush
+	 *            Boton de apertura.
+	 * @param parent
+	 *            Composite padre.
+	 */
 	public void funcionAbrir(ToolItem itemPush, final Shell parent) {
 
 		itemPush.addSelectionListener(new SelectionListener() {
@@ -130,6 +162,12 @@ public class VentanaFiltradoEstatico implements Runnable {
 
 	}
 
+	/**
+	 * Listener para el boton de recarga.
+	 * 
+	 * @param itemReload
+	 *            Boton de recarga.
+	 */
 	public void funcionRecargar(ToolItem itemReload) {
 
 		itemReload.addSelectionListener(new SelectionListener() {
@@ -148,6 +186,12 @@ public class VentanaFiltradoEstatico implements Runnable {
 
 	}
 
+	/**
+	 * Listener para el boton de aumentar espectro.
+	 * 
+	 * @param itemPlus
+	 *            Boton aumentar espectro.
+	 */
 	public void funcionAumentar(ToolItem itemPlus) {
 		itemPlus.addSelectionListener(new SelectionListener() {
 
@@ -165,6 +209,12 @@ public class VentanaFiltradoEstatico implements Runnable {
 		});
 	}
 
+	/**
+	 * Listener para el boton de disminuir espectro.
+	 * 
+	 * @param itemMinus
+	 *            Boton de disminuir espectro.
+	 */
 	public void funcionDisminuir(ToolItem itemMinus) {
 		itemMinus.addSelectionListener(new SelectionListener() {
 
@@ -182,6 +232,12 @@ public class VentanaFiltradoEstatico implements Runnable {
 		});
 	}
 
+	/**
+	 * Listener para el boton de guardado.
+	 * 
+	 * @param itemSave
+	 *            Boton de guardado.
+	 */
 	public void funcionGuardar(ToolItem itemSave) {
 		itemSave.addSelectionListener(new SelectionListener() {
 
@@ -216,6 +272,12 @@ public class VentanaFiltradoEstatico implements Runnable {
 		});
 	}
 
+	/**
+	 * Funcion que se encarga de crear el toolbar.
+	 * 
+	 * @param parent
+	 *            Composite padre del que colgara el toolbar.
+	 */
 	public void createToolBar(final Shell parent) {
 
 		// Creamos la toolbar

@@ -14,6 +14,16 @@ public class LabeledCombo {
 	private int estilo;
 	private Combo combo;
 
+	/**
+	 * Crea un combo que ya contiene una label asociada
+	 * 
+	 * @param parent
+	 *            El componente padre del que colgara el boton.
+	 * @param textoLabel
+	 *            El texto de la etiqueta.
+	 * @param estilo
+	 *            El estilo del combo.
+	 */
 	public LabeledCombo(Composite parent, String textoLabel, int estilo) {
 		super();
 		this.parent = parent;
@@ -22,6 +32,17 @@ public class LabeledCombo {
 		generarLabeledCombo(parent, textoLabel, estilo);
 	}
 
+	/**
+	 * Llamada que se utiliza desde el constructor para general el combo
+	 * etiquetado.
+	 * 
+	 * @param parent
+	 *            El componente padre del que colgara el boton.
+	 * @param textoLabel
+	 *            El texto de la etiqueta.
+	 * @param estilo
+	 *            El estilo del combo.
+	 */
 	public void generarLabeledCombo(Composite parent, String textoLabel, int estilo) {
 
 		Composite composite = new Composite(parent, SWT.NONE);
@@ -36,6 +57,13 @@ public class LabeledCombo {
 
 	}
 
+	/**
+	 * Añade un item al combo.
+	 * 
+	 * @param item
+	 *            Item que se añadira al combo.
+	 * 
+	 */
 	public void add(String item) {
 		combo.add(item);
 	}

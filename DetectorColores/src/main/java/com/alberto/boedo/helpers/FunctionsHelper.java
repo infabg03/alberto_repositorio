@@ -11,6 +11,16 @@ import com.alberto.boedo.vista.VentanaSelectora;
 @Component
 public class FunctionsHelper {
 
+	/**
+	 * Vuelve a la pantalla anterior a la que nos encontramos.
+	 * 
+	 * @param shell
+	 *            Pantalla actual.
+	 * @param itemBack
+	 *            El boton de vuelta atras.
+	 * @param passwd
+	 *            Email del usuario.
+	 */
 	public void funcionAtras(final Shell shell, ToolItem itemBack, final String passwd) {
 		itemBack.addSelectionListener(new SelectionListener() {
 

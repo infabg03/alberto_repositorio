@@ -2,6 +2,10 @@ package com.alberto.boedo.naming;
 
 public class i18Message {
 
+	/**
+	 * 
+	 */
+
 	public static final String RUTA_ORIGINAL = "src/resources/tempFotos/Original.jpg";
 
 	public static final String RUTA_CIE = "src/resources/tempFotos/CIE.jpg";

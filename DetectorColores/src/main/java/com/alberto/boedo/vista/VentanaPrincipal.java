@@ -33,11 +33,17 @@ public class VentanaPrincipal implements Runnable {
 	private final static Logger log = Logger.getLogger(VentanaPrincipal.class);
 	private static boolean ejecutado = false;
 
+	/**
+	 * Crea el contenido de la ventana.
+	 * 
+	 * @param shell
+	 *            Ventana a la que se añadira el contenido.
+	 */
 	private void getContent(final Shell shell) {
 
 		Composite composite = new Composite(shell, SWT.NONE);
-		composite.setLayout(new GridLayout(2, true));
-		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		composite.setLayout(new GridLayout(1, true));
+		GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, true, false);
 		gridData.widthHint = SWT.DEFAULT;
 		gridData.heightHint = SWT.DEFAULT;
 		composite.setLayoutData(gridData);
@@ -108,10 +114,13 @@ public class VentanaPrincipal implements Runnable {
 		});
 	}
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		final Display display = new Display();
 
-		System.out.println("El valor de ejecutado es: " + ejecutado);
 		if (!ejecutado) {
 			// Levantamos el servidor
 			try {

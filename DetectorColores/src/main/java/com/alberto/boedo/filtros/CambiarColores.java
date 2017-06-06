@@ -19,16 +19,27 @@ import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 import org.eclipse.swt.internal.win32.LOGBRUSH;
+import org.springframework.stereotype.Component;
 
 import com.alberto.boedo.naming.i18Message;
 import com.alberto.boedo.vista.VentanaCambioColores;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
+@Component
 public class CambiarColores {
 
 	private final static Logger log = Logger.getLogger(CambiarColores.class);
 
-	public static String conversor(String ruta, int opcion) {
+	/**
+	 * Aplica filtros de color a una imagen.
+	 * 
+	 * @param ruta
+	 *            Ruta de la imagen a filtrar;
+	 * @param opcion
+	 *            Opcion de filtro a aplicar.
+	 * @return Ruta de la imagen filtrada.
+	 */
+	public String conversor(String ruta, int opcion) {
 
 		IplImage imagen;
 		String foto = "";

@@ -10,6 +10,17 @@ import org.eclipse.swt.widgets.Display;
 
 public class BotonImagen {
 
+	/**
+	 * Crea un boton al que se le setea una imagen.
+	 * 
+	 * @param display
+	 *            El display asociado a la ventana.
+	 * @param parent
+	 *            El componente padre del que colgara el boton.
+	 * @param ruta
+	 *            La ruta de la imagen que queremos mostrar en el boton.
+	 * @return Boton que es una imagen.
+	 */
 	public Button getBotonImagen(Display display, Composite parent, String ruta) {
 
 		Button button = new Button(parent, SWT.NONE);

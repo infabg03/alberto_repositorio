@@ -4,5 +4,9 @@ import org.mongodb.morphia.Datastore;
 
 public interface MapeaDataStore {
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Datastore mapeaDataStore();
 }

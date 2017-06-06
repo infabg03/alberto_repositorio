@@ -21,10 +21,32 @@ public class LabeledEditText {
 
 	private boolean escribo = false;
 
+	/**
+	 * Setea un campo de texto.
+	 * 
+	 * @param text
+	 *            Un campo de texto.
+	 */
 	public void setText(Text text) {
 		this.text = text;
 	}
 
+	/**
+	 * Crea un campo de texto que ya tiene una etiqueta asociada.
+	 * 
+	 * @param parent
+	 *            El componente padre del que colgara el campo de texto.
+	 * @param estilo
+	 *            El estilo del campo de texto.
+	 * @param textoInterior
+	 *            Texto que contendra el campo de texto.
+	 * @param textoLabel
+	 *            Texto de la etiqueta.
+	 * @param passwd
+	 *            Texto del campo password.
+	 * @param ancho
+	 *            Ancho de la etiqueta.
+	 */
 	public LabeledEditText(Composite parent, int estilo, String textoInterior, String textoLabel, boolean passwd,
 			int ancho) {
 		this.parent = parent;
@@ -36,6 +58,21 @@ public class LabeledEditText {
 
 	}
 
+	/**
+	 * Funcion que se llama desde el constructor para generar el campo de texto
+	 * etiquetado.
+	 * 
+	 * @param parent
+	 *            El componente padre del que colgara el campo de texto.
+	 * @param textoInterior
+	 *            Texto que contendra el campo de texto.
+	 * @param textoLabel
+	 *            Texto de la etiqueta.
+	 * @param passwd
+	 *            Texto del campo password.
+	 * @param ancho
+	 *            Ancho de la etiqueta.
+	 */
 	public void getLabelEditText(Composite parent, String textoInterior, String textoLabel, boolean passwd, int ancho) {
 
 		Composite composite = new Composite(parent, SWT.NONE);
@@ -68,7 +105,6 @@ public class LabeledEditText {
 
 			}
 
-			// KeyEvent.getKeyText(e.getKeyCode()))
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				if (!escribo) {
@@ -80,18 +116,38 @@ public class LabeledEditText {
 
 	}
 
+	/**
+	 * Obtiene el texto de un texbox.
+	 * 
+	 * @return El texto de un texbox.
+	 */
 	public String getTexto() {
 		return text.getText();
 	}
 
+	/**
+	 * Devuelve un textbox.
+	 * 
+	 * @return Un textbox.
+	 */
 	public Text getText() {
 		return text;
 	}
 
+	/**
+	 * Setea el texto al texbox.
+	 * 
+	 * @param texto
+	 *            Texto que se quiere insertar en el campo de texto.
+	 */
 	public void setText(String texto) {
 		text.setText(texto);
 	}
 
+	/**
+	 * Hace que un campo de texto deje de ser editable.
+	 * 
+	 */
 	public void setDisable() {
 		text.setEditable(false);
 	}

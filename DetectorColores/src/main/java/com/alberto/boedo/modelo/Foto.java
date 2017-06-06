@@ -8,10 +8,21 @@ public class Foto implements Serializable {
 
 	private String ruta;
 
+	/**
+	 * Obtiene la ruta de una foto.
+	 * 
+	 * @return La ruta de una foto.
+	 */
 	public String getRuta() {
 		return ruta;
 	}
 
+	/**
+	 * Setea la ruta a una foto.
+	 * 
+	 * @param ruta
+	 *            Ruta a setear a la foto.
+	 */
 	public void setRuta(String ruta) {
 		this.ruta = ruta;
 	}

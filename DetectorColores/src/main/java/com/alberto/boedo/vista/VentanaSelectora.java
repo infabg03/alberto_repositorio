@@ -29,21 +29,52 @@ public class VentanaSelectora implements Runnable {
 	private Shell shell;
 	private Display display;
 	private String passwd;
-	private boolean pintoEditar;
 	private GestorEventos gestor = BeansFactory.getBean(GestorEventos.class);
 	private ShellHelper shellHelper = BeansFactory.getBean(ShellHelper.class);
 
+	/**
+	 * Crea una ventana selectora.
+	 * 
+	 * @param passwd
+	 *            Email del usuario.
+	 */
 	public VentanaSelectora(String passwd) {
 		super();
 		this.passwd = passwd;
 	}
 
+	/**
+	 * Pone (in)visibles los botones contenidos en la lista.
+	 * 
+	 * @param arrayBtn
+	 *            Array que contiene los botones sobre los que queremos actuar.
+	 * @param visible
+	 *            Booleano que indica si se pondran visibles o invisibles.
+	 */
 	public void ponerVisibles(List<Button> arrayBtn, boolean visible) {
 		for (Button boton : arrayBtn) {
 			boton.setVisible(visible);
 		}
 	}
 
+	/**
+	 * Ejecuta los listeners de los botones de la pantalla de seleccion.
+	 * 
+	 * @param editar
+	 *            Boton editar.
+	 * @param salir
+	 *            Boton salir.
+	 * @param estatico
+	 *            Boton estatico.
+	 * @param dinamico
+	 *            Boton dinamico.
+	 * @param cambioColor
+	 *            Boton cambio color.
+	 * @param moveMouse
+	 *            Boton moveMouse.
+	 * @param galeria
+	 *            Boton galeria.
+	 */
 	public void ejecutarListerners(Button editar, Button salir, Button estatico, Button dinamico, Button cambioColor,
 			Button moveMouse, Button galeria) {
 		salir.addSelectionListener(new SelectionListener() {
@@ -147,6 +178,12 @@ public class VentanaSelectora implements Runnable {
 
 	}
 
+	/**
+	 * Crea el contenido de la ventana.
+	 * 
+	 * @param shell
+	 *            Ventana donde se creara el contenido.
+	 */
 	private void getContent(Composite shell) {
 		Composite composite = new Composite(shell, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(3, false);

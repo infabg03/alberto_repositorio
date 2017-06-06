@@ -41,11 +41,23 @@ public class VentanaGaleria implements Runnable {
 	private ShellHelper shellHelper = BeansFactory.getBean(ShellHelper.class);
 	private ImageResizeHelper resizeHelper = BeansFactory.getBean(ImageResizeHelper.class);
 
+	/**
+	 * Crea una nueva ventana galeria.
+	 * 
+	 * @param passwd
+	 *            Email del usuario.
+	 */
 	public VentanaGaleria(String passwd) {
 		super();
 		this.passwd = passwd;
 	}
 
+	/**
+	 * Listener asociado al boton de retrasar foto.
+	 * 
+	 * @param btnLeft
+	 *            Boton izquierda.
+	 */
 	public void lefListener(Button btnLeft) {
 		btnLeft.addSelectionListener(new SelectionListener() {
 
@@ -68,6 +80,12 @@ public class VentanaGaleria implements Runnable {
 		});
 	}
 
+	/**
+	 * Listener asociado al boton de avanzar foto.
+	 * 
+	 * @param btnRight
+	 *            Boton derecha.
+	 */
 	public void rightListener(Button btnRight) {
 		btnRight.addSelectionListener(new SelectionListener() {
 
@@ -90,6 +108,10 @@ public class VentanaGaleria implements Runnable {
 		});
 	}
 
+	/**
+	 * Crea el contenido de la ventana.
+	 * 
+	 */
 	public void getContent() {
 		Persona p = personaDAO.getPersona(passwd);
 		listaFotos = p.getFotos();
