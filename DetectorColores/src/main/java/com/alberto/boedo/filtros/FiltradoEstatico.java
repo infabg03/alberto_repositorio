@@ -5,6 +5,7 @@ import static com.googlecode.javacv.cpp.opencv_core.cvGetSize;
 import static com.googlecode.javacv.cpp.opencv_core.cvInRangeS;
 import static com.googlecode.javacv.cpp.opencv_core.cvReleaseImage;
 import static com.googlecode.javacv.cpp.opencv_core.cvScalar;
+import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
 import static com.googlecode.javacv.cpp.opencv_highgui.cvWaitKey;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2HSV;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
@@ -21,11 +22,8 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.alberto.boedo.naming.i18Message;
-import com.alberto.boedo.vista.VentanaCambioColores;
 import com.googlecode.javacv.cpp.opencv_core.CvScalar;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
-
-import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
 
 /**
  *

@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
 
-import com.alberto.boedo.componentes.BotonImagen;
 import com.alberto.boedo.componentes.BotonTexto;
 import com.alberto.boedo.componentes.LabeledEditText;
 import com.alberto.boedo.controlador.GestorEventos;

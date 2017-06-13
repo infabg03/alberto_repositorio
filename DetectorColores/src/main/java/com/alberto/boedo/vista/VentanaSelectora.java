@@ -6,8 +6,6 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.events.ShellAdapter;
-import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -131,7 +129,10 @@ public class VentanaSelectora implements Runnable {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				FiltradoDinamico.execute();
+				// FiltradoDinamico.execute();
+				shell.dispose();
+				Thread tFiltradoDinamico = new Thread(new VentanaFiltradoDinamico(passwd));
+				tFiltradoDinamico.start();
 
 			}
 

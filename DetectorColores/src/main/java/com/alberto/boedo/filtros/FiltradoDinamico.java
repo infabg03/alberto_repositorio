@@ -14,11 +14,14 @@ import static com.googlecode.javacv.cpp.opencv_highgui.cvWaitKey;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2HSV;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
+import org.springframework.stereotype.Component;
+
 import com.alberto.boedo.naming.i18Message;
 import com.googlecode.javacv.cpp.opencv_core;
 import com.googlecode.javacv.cpp.opencv_highgui.CvCapture;
 
-public class FiltradoDinamico {
+@Component
+public class FiltradoDinamico implements IFiltradoDinamico {
 
 	/**
 	 * Muestra dos ventanas, una en la que se ve la imagen real captada por la
@@ -26,7 +29,8 @@ public class FiltradoDinamico {
 	 * filtrando.
 	 * 
 	 */
-	public static void execute() {
+	@Override
+	public void execute() {
 		opencv_core.IplImage img1, imghsv, imgbin;
 
 		imghsv = cvCreateImage(cvSize(640, 480), 8, 3);
@@ -54,6 +58,7 @@ public class FiltradoDinamico {
 			char c = (char) cvWaitKey(15);
 			if (c == 'q') {
 				break;
+
 			}
 
 		}

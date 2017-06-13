@@ -11,7 +11,6 @@ import com.alberto.boedo.modelo.Foto;
 import com.alberto.boedo.modelo.Persona;
 import com.alberto.boedo.modelo.PersonaDAO;
 import com.alberto.boedo.naming.i18Message;
-import com.alberto.boedo.vista.VentanaPrincipal;
 
 @Component
 public class GestorEventosImpl implements GestorEventos {

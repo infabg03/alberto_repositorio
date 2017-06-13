@@ -18,11 +18,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
-import org.eclipse.swt.internal.win32.LOGBRUSH;
 import org.springframework.stereotype.Component;
 
 import com.alberto.boedo.naming.i18Message;
-import com.alberto.boedo.vista.VentanaCambioColores;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 @Component

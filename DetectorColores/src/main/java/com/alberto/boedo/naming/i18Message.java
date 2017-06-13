@@ -128,6 +128,8 @@ public class i18Message {
 
 	public static final String RUTA_INFO = "src/resources/info.png";
 
+	public static final String RUTA_PLAY = "src/resources/play.png";
+
 	public static final String INFO_ACCESO = "Informacion de acceso";
 
 	public static final String MSG_ACCESO = "El login o password son incorrectos";
@@ -181,5 +183,7 @@ public class i18Message {
 	public static final String LINK_TXT = "¿No estas registrado? <A>Registrate ahora</A>";
 
 	public static final String MSG_EMAIL_VACIO = "El usuario no ha introducido su email";
+
+	public static final String MSG_SELEC_COLOR = "Elija un color por el que filtrar";
 
 }
