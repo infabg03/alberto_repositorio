@@ -30,7 +30,7 @@ public class FiltradoDinamico implements IFiltradoDinamico {
 	 * 
 	 */
 	@Override
-	public void execute() {
+	public void execute(String color) {
 		opencv_core.IplImage img1, imghsv, imgbin;
 
 		imghsv = cvCreateImage(cvSize(640, 480), 8, 3);
@@ -49,8 +49,33 @@ public class FiltradoDinamico implements IFiltradoDinamico {
 			cvCvtColor(img1, imghsv, CV_BGR2HSV);
 			// Rango de colores por los que se va a filtrar minc maxc
 			opencv_core.CvScalar minc, maxc;
-			minc = cvScalar(95, 50, 75, 0);
-			maxc = cvScalar(135, 255, 255, 0);
+			System.out.println("El color es: "+color);
+			switch (color) {
+			default:
+				minc = cvScalar(95, 150, 75, 0);
+				maxc = cvScalar(135, 255, 255, 0);
+				break;
+			case i18Message.COLOR_AZUL:
+				minc = cvScalar(95, 150, 75, 0);
+				maxc = cvScalar(135, 255, 255, 0);
+				break;
+			case i18Message.COLOR_ROJO:
+				minc = cvScalar(0, 150, 75, 0);
+				maxc = cvScalar(10, 255, 255, 0);
+				break;
+			case i18Message.COLOR_VERDE:
+				minc = cvScalar(25, 150, 75, 0);
+				maxc = cvScalar(70, 255, 255, 0);
+				break;
+			case i18Message.COLOR_VIOLETA:
+				minc = cvScalar(135, 150, 75, 0);
+				maxc = cvScalar(150, 255, 255, 0);
+				break;
+			case i18Message.COLOR_AMARILLO_NARANJA:
+				minc = cvScalar(10, 150, 75, 0);
+				maxc = cvScalar(25, 255, 255, 0);
+				break;
+			}
 			cvInRangeS(imghsv, minc, maxc, imgbin);
 
 			cvShowImage(i18Message.LABEL_COLOR, img1);

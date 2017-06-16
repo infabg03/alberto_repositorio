@@ -19,6 +19,8 @@ import com.alberto.boedo.componentes.BotonImagen;
 import com.alberto.boedo.controlador.GestorEventos;
 import com.alberto.boedo.factoria.BeansFactory;
 import com.alberto.boedo.filtros.FiltradoDinamico;
+import com.alberto.boedo.filtros.IMoverRaton;
+import com.alberto.boedo.filtros.MoverRaton;
 import com.alberto.boedo.helpers.ColorHelper;
 import com.alberto.boedo.helpers.ShellHelper;
 import com.alberto.boedo.naming.i18Message;
@@ -29,6 +31,7 @@ public class VentanaSelectora implements Runnable {
 	private String passwd;
 	private GestorEventos gestor = BeansFactory.getBean(GestorEventos.class);
 	private ShellHelper shellHelper = BeansFactory.getBean(ShellHelper.class);
+	private IMoverRaton mvRaton = BeansFactory.getBean(MoverRaton.class);
 
 	/**
 	 * Crea una ventana selectora.
@@ -174,6 +177,21 @@ public class VentanaSelectora implements Runnable {
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
 
+			}
+		});
+		
+		moveMouse.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				mvRaton.execute();
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 

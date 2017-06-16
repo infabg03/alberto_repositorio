@@ -28,13 +28,13 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/alberto.boedo/Desktop/LibreriasJavaCV/javacv-cppjars/ffmpeg-2.1.1-windows-x86.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alberto.boedo/Desktop/LibreriasJavaCV/javacv-cppjars/ffmpeg-2.1.1-windows-x86_64.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alberto.boedo/Desktop/LibreriasJavaCV/javacv-cppjars/opencv-2.4.8-windows-x86.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alberto.boedo/Desktop/LibreriasJavaCV/javacv-cppjars/opencv-2.4.8-windows-x86_64.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alberto.boedo/Desktop/LibreriasJavaCV/javacv-bin/javacpp.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alberto.boedo/Desktop/LibreriasJavaCV/javacv-bin/javacv.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alberto.boedo/Desktop/LibreriasJavaCV/javacv-bin/javacv-windows-x86.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alberto.boedo/Desktop/LibreriasJavaCV/javacv-bin/javacv-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="C:/javacv-cppjars/ffmpeg-2.1.1-windows-x86.jar"/>
+	<classpathentry kind="lib" path="C:/javacv-cppjars/ffmpeg-2.1.1-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="C:/javacv-cppjars/opencv-2.4.8-windows-x86.jar"/>
+	<classpathentry kind="lib" path="C:/javacv-cppjars/opencv-2.4.8-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="C:/javacv-bin/javacpp.jar"/>
+	<classpathentry kind="lib" path="C:/javacv-bin/javacv.jar"/>
+	<classpathentry kind="lib" path="C:/javacv-bin/javacv-windows-x86.jar"/>
+	<classpathentry kind="lib" path="C:/javacv-bin/javacv-windows-x86_64.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

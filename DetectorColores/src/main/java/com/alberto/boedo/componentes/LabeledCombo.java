@@ -66,5 +66,9 @@ public class LabeledCombo {
 	public void add(String item) {
 		combo.add(item);
 	}
+	
+	public String getSelected(){
+		return combo.getText();
+	}
 
 }

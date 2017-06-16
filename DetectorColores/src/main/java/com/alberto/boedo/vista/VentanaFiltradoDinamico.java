@@ -23,6 +23,7 @@ public class VentanaFiltradoDinamico implements Runnable {
 	private ShellHelper shellHelper = BeansFactory.getBean(ShellHelper.class);
 	private String passwd;
 	private IFiltradoDinamico filtradoDinamico = BeansFactory.getBean(FiltradoDinamico.class);
+	private LabeledCombo comboColores;
 
 	public VentanaFiltradoDinamico() {
 		super();
@@ -55,7 +56,7 @@ public class VentanaFiltradoDinamico implements Runnable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				filtradoDinamico.execute();
+				filtradoDinamico.execute(comboColores.getSelected());
 			}
 
 			@Override
@@ -67,7 +68,7 @@ public class VentanaFiltradoDinamico implements Runnable {
 	}
 
 	private void getContent() {
-		LabeledCombo comboColores = new LabeledCombo(shell, i18Message.MSG_SELEC_COLOR, SWT.DROP_DOWN);
+		comboColores = new LabeledCombo(shell, i18Message.MSG_SELEC_COLOR, SWT.DROP_DOWN);
 		comboColores.add(i18Message.COLOR_AMARILLO_NARANJA);
 		comboColores.add(i18Message.COLOR_AZUL);
 		comboColores.add(i18Message.COLOR_ROJO);
